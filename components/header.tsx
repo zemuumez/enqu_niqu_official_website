@@ -62,7 +62,10 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 magnetic">
-            <div className="relative w-10 h-10" style={{ width: 40, height: 40 }}>
+            <div
+              className="relative w-10 h-10"
+              style={{ width: 40, height: 40 }}
+            >
               <Image
                 src="/images/sophor-logo.png"
                 alt="ENQU SET NIQU SET"

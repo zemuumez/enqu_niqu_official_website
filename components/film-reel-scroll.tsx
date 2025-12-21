@@ -1,106 +1,69 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 
 interface FilmFrame {
   id: string;
-  name: string;
+  name?: string;
   image: string;
-  session: string;
+  session?: string;
 }
 
-// Previous sessions (scrolling left)
-const previousFrames: FilmFrame[] = [
+// Default placeholder frames (used only when no images are provided)
+const defaultPreviousFrames: FilmFrame[] = [
   {
     id: "1",
-    name: "Selamawit Bekele",
     image: "/placeholder.svg?height=300&width=300",
+    name: "Selamawit Bekele",
     session: "Founding Gathering",
   },
   {
     id: "2",
-    name: "Hanan Mohammed",
     image: "/placeholder.svg?height=300&width=300",
+    name: "Hanan Mohammed",
     session: "Founding Gathering",
   },
   {
     id: "3",
+    image: "/placeholder.svg?height=300&width=300",
     name: "Lensa Adugna",
-    image: "/placeholder.svg?height=300&width=300",
     session: "Founding Gathering",
-  },
-  {
-    id: "4",
-    name: "Tigist Abebe",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Tech Pioneers",
-  },
-  {
-    id: "5",
-    name: "Meron Tesfaye",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Tech Pioneers",
-  },
-  {
-    id: "6",
-    name: "Bethlehem Alemu",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Community Leaders",
-  },
-  {
-    id: "7",
-    name: "Selam Worku",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Community Leaders",
   },
 ];
 
-// Upcoming sessions (scrolling right)
-const upcomingFrames: FilmFrame[] = [
+const defaultUpcomingFrames: FilmFrame[] = [
   {
     id: "8",
-    name: "Yeshi Desta",
     image: "/placeholder.svg?height=300&width=300",
+    name: "Yeshi Desta",
     session: "Healthcare Heroes",
   },
   {
     id: "9",
-    name: "Alem Hailu",
     image: "/placeholder.svg?height=300&width=300",
+    name: "Alem Hailu",
     session: "Healthcare Heroes",
   },
   {
     id: "10",
+    image: "/placeholder.svg?height=300&width=300",
     name: "Meseret Bekele",
-    image: "/placeholder.svg?height=300&width=300",
     session: "Artisan Masters",
-  },
-  {
-    id: "11",
-    name: "Hirut Kebede",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Artisan Masters",
-  },
-  {
-    id: "12",
-    name: "Eden Tefera",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Tech Innovators",
-  },
-  {
-    id: "13",
-    name: "Sara Mulugeta",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Tech Innovators",
-  },
-  {
-    id: "14",
-    name: "Ruth Alemayehu",
-    image: "/placeholder.svg?height=300&width=300",
-    session: "Future Leaders",
   },
 ];
+
+// Simple in-file shuffle (Fisher-Yates)
+function shuffle<T>(items: T[]) {
+  const a = items.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+  return a;
+}
 
 // Film Strip Component with authentic reel design
 function FilmStrip({
@@ -149,7 +112,7 @@ function FilmStrip({
               <div className="relative w-48 h-64 bg-zinc-800 border-2 border-zinc-700 overflow-hidden">
                 <Image
                   src={frame.image || "/placeholder.svg"}
-                  alt={frame.name}
+                  alt={frame.name ?? "film image"}
                   fill
                   className="object-cover"
                 />
@@ -186,9 +149,32 @@ function FilmStrip({
   );
 }
 
-export default function FilmReelScroll() {
+export default function FilmReelScroll({
+  previousImages,
+  upcomingImages,
+}: {
+  previousImages?: string[];
+  upcomingImages?: string[];
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Create randomized frames only when input arrays change (or on mount)
+  const randomizedPreviousFrames: FilmFrame[] = useMemo(() => {
+    if (previousImages && previousImages.length > 0) {
+      const shuffled = shuffle(previousImages);
+      return shuffled.map((src, i) => ({ id: String(i), image: src }));
+    }
+    return defaultPreviousFrames;
+  }, [previousImages]);
+
+  const randomizedUpcomingFrames: FilmFrame[] = useMemo(() => {
+    if (upcomingImages && upcomingImages.length > 0) {
+      const shuffled = shuffle(upcomingImages);
+      return shuffled.map((src, i) => ({ id: String(i + 100), image: src }));
+    }
+    return defaultUpcomingFrames;
+  }, [upcomingImages]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -247,7 +233,7 @@ export default function FilmReelScroll() {
                 style={{ transform: `translateX(${leftReelTransform}%)` }}
               >
                 <FilmStrip
-                  frames={previousFrames}
+                  frames={randomizedPreviousFrames}
                   color="black"
                   label="PREVIOUS SESSIONS"
                 />
@@ -263,7 +249,7 @@ export default function FilmReelScroll() {
                 style={{ transform: `translateX(${rightReelTransform}%)` }}
               >
                 <FilmStrip
-                  frames={upcomingFrames}
+                  frames={randomizedUpcomingFrames}
                   color="red"
                   label="UPCOMING SESSIONS"
                 />
