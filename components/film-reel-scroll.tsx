@@ -96,7 +96,7 @@ function FilmStrip({
   return (
     <div
       ref={stripRef}
-      className="flex items-center gap-0 select-none pointer-events-none w-max"
+      className="flex items-center gap-0 select-none pointer-events-none"
     >
       {allFrames.map((frame, index) => (
         <div key={`${frame.id}-${index}`} className="flex-shrink-0">
@@ -311,8 +311,8 @@ export default function FilmReelScroll({
   const leftReelTransform =
     leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
   // For right reel, ensure we start with frames visible (no empty space at start)
-  // When scrollProgress is 0, we want to show frames, so transform should be 0
-  // But we need to ensure the strip fills the container from the start
+  // When scrollProgress is 0, transform is 0, which should show frames from the start
+  // The strip should naturally fill from the left edge
   const rightReelTransform =
     rightSetWidth > 0 ? scrollDistance % rightSetWidth : 0;
 

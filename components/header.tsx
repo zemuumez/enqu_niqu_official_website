@@ -67,7 +67,7 @@ export default function Header() {
               style={{ width: 40, height: 40 }}
             >
               <Image
-                src="/images/sophor-logo.png"
+                src="/images/enqu_niqu_logo.png"
                 alt="ENQU SET NIQU SET"
                 fill
                 className="object-contain"
