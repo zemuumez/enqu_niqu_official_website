@@ -9,7 +9,7 @@ import Footer from "@/components/footer";
 import LogoCloudSection from "@/components/logo-cloud-section";
 import AwardsShowcase from "@/components/awards-showcase";
 import FilmRealScroll from "@/components/film-reel-scroll";
-// import PatternDevider from "@/components/pattern-divider";
+import PatternDevider from "@/components/pattern-divider";
 import { LanguageProvider } from "@/contexts/language-context";
 import fs from "fs";
 import path from "path";
@@ -22,12 +22,9 @@ export default function Home() {
   const readPublicImages = (dir: string, publicBase: string) => {
     try {
       const files = fs.readdirSync(dir || "");
-      return (
-        files
-          .filter((f) => /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f))
-          // encodeURI the public path so characters like '#' and spaces are percent-encoded
-          .map((f) => encodeURI(`${publicBase}/${f}`))
-      );
+      return files
+        .filter((f) => /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f))
+        .map((f) => `${publicBase}/${f}`);
     } catch (e) {
       return [] as string[];
     }
