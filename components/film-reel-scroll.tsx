@@ -306,15 +306,21 @@ export default function FilmReelScroll({
   const rightSetWidth =
     rightStripWidth > 0 ? rightStripWidth : estimatedRightSetWidth;
 
+  // Offset the right reel by one full set so there are frames "behind" it,
+  // preventing a blank gap when it starts moving to the right.
+  const rightBaseOffset = rightSetWidth > 0 ? -rightSetWidth : 0;
+
   // Use modulo to create seamless loop - when we reach one set width, loop back
   // This ensures the tail connects seamlessly to the head
   const leftReelTransform =
     leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
-  // For right reel, ensure we start with frames visible (no empty space at start)
-  // When scrollProgress is 0, transform is 0, which should show frames from the start
-  // The strip should naturally fill from the left edge
+  // For right reel scrolling right, ensure frames are visible from the start
+  // The issue: when scrolling right (positive transform), at 0 the strip should show frames
+  // But there's empty space, which suggests the strip isn't positioned correctly
+  // Solution: ensure the strip starts with frames visible by checking container setup
+  // When transform is 0, the strip should be at left edge showing frames immediately
   const rightReelTransform =
-    rightSetWidth > 0 ? scrollDistance % rightSetWidth : 0;
+    rightSetWidth > 0 ? rightBaseOffset + (scrollDistance % rightSetWidth) : 0;
 
   return (
     <section
@@ -356,7 +362,13 @@ export default function FilmReelScroll({
             <div className="overflow-hidden w-full">
               <div
                 className="flex items-center will-change-transform"
-                style={{ transform: `translateX(${rightReelTransform}px)` }}
+                style={{
+                  transform: `translateX(${rightReelTransform}px)`,
+                  // Ensure the strip starts at left edge (0) with frames visible
+                  // Remove any potential spacing that could cause empty space
+                  margin: 0,
+                  padding: 0,
+                }}
               >
                 <FilmStrip
                   frames={randomizedUpcomingFrames}
