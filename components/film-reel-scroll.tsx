@@ -107,19 +107,23 @@ function FilmStrip({
               {[...Array(4)].map((_, i) => (
                 <div
                   key={`top-${i}`}
-                  className="w-3 h-3 bg-background border border-zinc-600 rounded-sm"
+                  className="w-2.5 h-2.5 bg-background border border-zinc-600 rounded-sm"
                 />
               ))}
             </div>
 
             {/* Photo Frame */}
-            <div className="px-4 py-8">
-              <div className="relative w-48 h-64 bg-zinc-800 border-2 border-zinc-700 overflow-hidden">
+            <div className="px-3 py-6">
+              <div className="relative w-36 h-48 bg-zinc-800 border-2 border-zinc-700 overflow-hidden group cursor-pointer">
                 <Image
                   src={frame.image || "/placeholder.svg"}
                   alt={frame.name ?? "film image"}
                   fill
-                  className="object-cover"
+                  className={`object-cover transition-all duration-500 ease-in-out ${
+                    color === "red"
+                      ? "grayscale group-hover:grayscale-0 group-hover:scale-110"
+                      : "group-hover:scale-110"
+                  }`}
                 />
                 {/* Frame Info Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
@@ -136,7 +140,7 @@ function FilmStrip({
               {[...Array(4)].map((_, i) => (
                 <div
                   key={`bottom-${i}`}
-                  className="w-3 h-3 bg-background border border-zinc-600 rounded-sm"
+                  className="w-2.5 h-2.5 bg-background border border-zinc-600 rounded-sm"
                 />
               ))}
             </div>
@@ -293,8 +297,8 @@ export default function FilmReelScroll({
   const maxScrollDistance = 3000; // Maximum scroll distance in pixels
   const scrollDistance = scrollProgress * maxScrollDistance;
 
-  // Estimate frame width if not yet calculated (w-48 = 192px + padding = ~224px)
-  const estimatedFrameWidth = 224;
+  // Estimate frame width if not yet calculated (w-36 = 144px + padding = ~170px)
+  const estimatedFrameWidth = 170;
   const estimatedLeftSetWidth =
     randomizedPreviousFrames.length * estimatedFrameWidth;
   const estimatedRightSetWidth =
@@ -313,33 +317,29 @@ export default function FilmReelScroll({
   // Use modulo to create seamless loop - when we reach one set width, loop back
   // This ensures the tail connects seamlessly to the head
   const leftReelTransform =
-    leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
-  // For right reel scrolling right, ensure frames are visible from the start
-  // The issue: when scrolling right (positive transform), at 0 the strip should show frames
-  // But there's empty space, which suggests the strip isn't positioned correctly
-  // Solution: ensure the strip starts with frames visible by checking container setup
-  // When transform is 0, the strip should be at left edge showing frames immediately
-  const rightReelTransform =
     rightSetWidth > 0 ? rightBaseOffset + (scrollDistance % rightSetWidth) : 0;
+
+  const rightReelTransform =
+    leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-muted overflow-hidden py-20"
+      className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-background to-muted overflow-hidden py-12"
     >
       <div className="w-full max-w-[2000px] mx-auto px-4">
         {/* Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-3">
             Our Journey Through Time
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Scroll to explore past honorees and upcoming sessions
           </p>
         </div>
 
         {/* Film Reel Container */}
-        <div className="space-y-12">
+        <div className="space-y-10">
           {/* Top Film Reel - Previous Sessions (Scrolling Left) */}
           <div className="relative w-full">
             <div className="overflow-hidden w-full">

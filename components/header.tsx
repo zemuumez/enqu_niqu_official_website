@@ -59,12 +59,12 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 magnetic">
             <div
-              className="relative w-10 h-10"
-              style={{ width: 40, height: 40 }}
+              className="relative w-9 h-9"
+              style={{ width: 36, height: 36 }}
             >
               <Image
                 src="/images/enqu_niqu_logo.png"
@@ -75,15 +75,15 @@ export default function Header() {
               />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-xl font-medium">ዕንቁ ሴት ንቁ ሴት</span>
-              <span className="text-[11px] uppercase tracking-[0.16em] text-text-muted">
+              <span className="text-lg font-medium">ዕንቁ ሴት ንቁ ሴት</span>
+              <span className="text-[10px] uppercase tracking-[0.16em] text-text-muted">
                 ENQU SET NIQU SET
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-12">
+          <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.key}

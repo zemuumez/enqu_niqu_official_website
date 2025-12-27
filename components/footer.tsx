@@ -32,14 +32,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-primary text-white">
-      <div className="container mx-auto px-4 lg:px-6 border-t-2 py-12">
-        <div className="grid lg:grid-cols-4 gap-12 text-slate-800">
+      <div className="container mx-auto px-4 lg:px-6 border-t-2 py-8">
+        <div className="grid lg:grid-cols-4 gap-8 text-slate-800">
           {/* Logo and Description */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center space-x-3 mb-6">
               <div
-                className="relative w-12 h-12"
-                style={{ width: 48, height: 48 }}
+                className="relative w-10 h-10"
+                style={{ width: 40, height: 40 }}
               >
                 <Image
                   src="/images/enqu_niqu_logo.png"
@@ -63,25 +63,25 @@ export default function Footer() {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
               >
                 <Twitter className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
@@ -90,7 +90,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-6">Quick Links</h3>
+            <h3 className="text-base font-semibold mb-5">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.key}>
@@ -115,7 +115,7 @@ export default function Footer() {
 
           {/* Programs */}
           <div>
-            <h3 className="text-lg font-bold mb-6">Initiatives</h3>
+            <h3 className="text-base font-semibold mb-5">Initiatives</h3>
             <ul className="space-y-3">
               {programs.map((program) => (
                 <li key={program.name}>
@@ -132,7 +132,7 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-bold mb-6">Contact Info</h3>
+            <h3 className="text-base font-semibold mb-5">Contact Info</h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
@@ -151,7 +151,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center mt-12 border-t border-black">
+        <div className="pt-6 flex flex-col md:flex-row justify-between items-center mt-8 border-t border-black">
           <p className="text-sm text-black">
             © 2024 ENQU SET NIQU SET. All rights reserved.
             <span className="sr-only">Powered by Zemichael Tefera</span>
