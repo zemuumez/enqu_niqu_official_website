@@ -31,7 +31,11 @@ export default function AboutSection() {
   }, [])
 
   return (
-    <section id="about" ref={sectionRef} className="section bg-surface">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="section bg-gradient-to-b from-white via-amber-50/60 to-orange-50/40"
+    >
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Content */}

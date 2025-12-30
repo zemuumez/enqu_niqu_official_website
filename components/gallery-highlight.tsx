@@ -52,7 +52,11 @@ export default function GalleryHighlight() {
   }, []);
 
   return (
-    <section id="gallery" ref={sectionRef} className="section bg-surface">
+    <section
+      id="gallery"
+      ref={sectionRef}
+      className="section bg-gradient-to-b from-white via-amber-50/50 to-rose-50/40"
+    >
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-16">

@@ -56,7 +56,11 @@ export default function MentorsHighlight() {
   }, []);
 
   return (
-    <section id="mentors" ref={sectionRef} className="section bg-background">
+    <section
+      id="mentors"
+      ref={sectionRef}
+      className="section bg-gradient-to-r from-rose-50/60 via-white to-amber-50/50"
+    >
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-16">

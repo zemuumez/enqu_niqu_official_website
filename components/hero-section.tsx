@@ -27,7 +27,7 @@ export default function HeroSection() {
     <section
       id="home"
       ref={heroRef}
-      className="section relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="section relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-orange-50 via-white to-amber-50"
     >
       <div className="container mx-auto px-6 lg:px-12 text-center">
         <div className="max-w-4xl mx-auto space-y-8">

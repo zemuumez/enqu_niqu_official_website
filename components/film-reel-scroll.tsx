@@ -96,7 +96,7 @@ function FilmStrip({
   return (
     <div
       ref={stripRef}
-      className="flex items-center gap-0 select-none pointer-events-none"
+      className="flex items-center gap-0 select-none pointer-events-auto"
     >
       {allFrames.map((frame, index) => (
         <div key={`${frame.id}-${index}`} className="flex-shrink-0">
@@ -119,10 +119,8 @@ function FilmStrip({
                   src={frame.image || "/placeholder.svg"}
                   alt={frame.name ?? "film image"}
                   fill
-                  className={`object-cover transition-all duration-500 ease-in-out ${
-                    color === "red"
-                      ? "grayscale group-hover:grayscale-0 group-hover:scale-110"
-                      : "group-hover:scale-110"
+                  className={`object-cover transition-all duration-500 ease-in-out group-hover:scale-110 ${
+                    color === "red" ? "grayscale group-hover:grayscale-0" : ""
                   }`}
                 />
                 {/* Frame Info Overlay */}
@@ -325,7 +323,7 @@ export default function FilmReelScroll({
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-background to-muted overflow-hidden py-12"
+      className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-orange-50 via-amber-100/70 to-rose-50/60 overflow-hidden py-12"
     >
       <div className="w-full max-w-[2000px] mx-auto px-4">
         {/* Title */}
@@ -342,7 +340,7 @@ export default function FilmReelScroll({
         <div className="space-y-10">
           {/* Top Film Reel - Previous Sessions (Scrolling Left) */}
           <div className="relative w-full">
-            <div className="overflow-hidden w-full">
+            <div className="overflow-hidden w-full rounded-2xl border border-zinc-800/60 bg-zinc-950/50">
               <div
                 className="flex items-center will-change-transform"
                 style={{ transform: `translateX(${leftReelTransform}px)` }}
@@ -350,7 +348,7 @@ export default function FilmReelScroll({
                 <FilmStrip
                   frames={randomizedPreviousFrames}
                   color="black"
-                  label="PREVIOUS SESSIONS"
+                  label=""
                   stripRef={leftStripRef}
                 />
               </div>
@@ -359,7 +357,7 @@ export default function FilmReelScroll({
 
           {/* Bottom Film Reel - Upcoming Sessions (Scrolling Right) */}
           <div className="relative w-full">
-            <div className="overflow-hidden w-full">
+            <div className="overflow-hidden w-full rounded-2xl border border-red-900/50 bg-red-950/40">
               <div
                 className="flex items-center will-change-transform"
                 style={{
@@ -373,7 +371,7 @@ export default function FilmReelScroll({
                 <FilmStrip
                   frames={randomizedUpcomingFrames}
                   color="red"
-                  label="UPCOMING SESSIONS"
+                  label=""
                   stripRef={rightStripRef}
                 />
               </div>

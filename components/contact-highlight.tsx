@@ -31,7 +31,11 @@ export default function ContactHighlight() {
   }, [])
 
   return (
-    <section id="contact" ref={sectionRef} className="section bg-surface">
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="section bg-gradient-to-r from-amber-50/60 via-white to-orange-50/50"
+    >
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-16">

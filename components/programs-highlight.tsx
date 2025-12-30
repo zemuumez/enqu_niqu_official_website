@@ -94,7 +94,11 @@ export default function ProgramsHighlight() {
   }, [])
 
   return (
-    <section id="programs" ref={sectionRef} className="section bg-background">
+    <section
+      id="programs"
+      ref={sectionRef}
+      className="section bg-gradient-to-b from-orange-50/50 via-white to-amber-100/50"
+    >
       <div className="container mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-20">

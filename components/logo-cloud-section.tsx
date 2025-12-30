@@ -40,7 +40,7 @@ export default function LogoCloudSection() {
   }, [])
 
   return (
-    <section className="py-12 bg-surface-light overflow-hidden">
+    <section className="py-12 overflow-hidden bg-gradient-to-r from-amber-50 via-orange-50/70 to-rose-50/70">
       <style jsx>{`
         @keyframes marquee {
           0% { transform: translateX(0%); }
