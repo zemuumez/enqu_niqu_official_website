@@ -99,7 +99,7 @@ export default function ContactContent() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-text-primary">Gathering Rhythm</h4>
-                    <p className="text-text-secondary">Award events curated multiple times a year</p>
+                    <p className="text-text-secondary">Award events held twice a year</p>
                     <p className="text-text-secondary">Next gathering: January 6</p>
                     <p className="text-text-secondary">Podcast: launching soon</p>
                   </div>

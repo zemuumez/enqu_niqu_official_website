@@ -11,7 +11,7 @@ export default function ProgramsSection() {
 
   const programs = [
     {
-      title: "Annual & Thematic Award Events",
+      title: "Bi-annual & Thematic Award Events",
       duration: "7 gatherings hosted",
       age: "Next: January 6",
       price: "Recognition that restores dignity",

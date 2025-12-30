@@ -4,38 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import { Github, Linkedin, Mail, Award, BookOpen, Users } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 
-export default function MentorsContent() {
+export default function personsContent() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
-  const allMentors = [
+  const allPersons = [
     {
-      nameKey: "mentor.samuel_name",
-      titleKey: "mentor.samuel_title",
-      image: "/images/Mentors/SamuelGeremew.jpg",
-      bio: "Founder who envisioned an empowerment platform that recognizes women as awakened gems, built on trust and authenticity.",
-      specialties: [
-        "Vision & Strategy",
-        "Recognition Design",
-        "Community Trust",
-        "Storytelling",
-      ],
-      experience: "7 events hosted",
-      education: "Founder, ENQU SET NIQU SET",
-      achievements: [
-        "Launched ENQU SET NIQU SET with family",
-        "Curated January 6 gathering",
-        "Keeps recognition at the center",
-      ],
-      github: "#",
-      linkedin: "#",
-      email: "samuel@enkuniqu.com",
-    },
-    {
-      nameKey: "mentor.weynishet_name",
-      titleKey: "mentor.weynishet_title",
-      image: "/images/Mentors/Weynishet_Geremew.png",
+      nameKey: "person.weynshet_name",
+      titleKey: "person.weynshet_title",
+      image: "/images/Persons/Weynshet_Geremew.png",
       bio: "Co-founder centering women at every decision, ensuring ENQU SET NIQU SET stays deeply human and impact-driven.",
       specialties: [
         "Program Stewardship",
@@ -50,51 +28,48 @@ export default function MentorsContent() {
         "Shapes award categories with care",
         "Keeps events grounded in purpose",
       ],
-      email: "mulu@enkuniqu.com",
+      email: "mulu_tsehay_tsehay@enkuniqu.com",
     },
     {
-      nameKey: "mentor.zemichael_name",
-      titleKey: "mentor.zemichael_title",
-      image: "/images/Mentors/ZemichaelTefera.png",
-      bio: "Co-founder curating voices, dialogues, and safe spaces so girls and women feel seen and heard.",
+      nameKey: "person.samuel_name",
+      titleKey: "person.samuel_title",
+      image: "/images/Persons/SamuelGeremew.jpg",
+      bio: "Founder who envisioned an empowerment platform that recognizes women as awakened gems, built on trust and authenticity.",
       specialties: [
-        "Dialogue Design",
-        "Representation",
-        "Community Outreach",
-        "Event Flow",
+        "Vision & Strategy",
+        "Recognition Design",
+        "Community Trust",
+        "Storytelling",
       ],
-      experience: "7 events held",
+      experience: "7 events hosted",
+      education: "Founder, ENQU SET NIQU SET",
+      achievements: [
+        "Launched ENQU SET NIQU SET with family",
+        "Curated January 6 gathering",
+        "Keeps recognition at the center",
+      ],
+
+      email: "samuel@enkuniqu.com",
+    },
+    {
+      nameKey: "person.mulu_name",
+      titleKey: "person.mulu_title",
+      image: "/images/Persons/Mulu_Tsehay_Geremew.png",
+      bio: "Co-founder centering women at every decision, ensuring ENQU SET NIQU SET stays deeply human and impact-driven.",
+      specialties: [
+        "Program Stewardship",
+        "Authenticity",
+        "Community Care",
+        "Event Design",
+      ],
+      experience: "Family-led leadership",
       education: "Co-founder, ENQU SET NIQU SET",
       achievements: [
-        "Curated storytelling circles",
-        "Supports honorees pre- and post-event",
-        "Bridges allies and honorees",
+        "Co-built a women-centered leadership team",
+        "Shapes award categories with care",
+        "Keeps events grounded in purpose",
       ],
-      github: "#",
-      linkedin: "#",
-      email: "weynishet@enkuniqu.com",
-    },
-    {
-      nameKey: "mentor.kidaneworl_name",
-      titleKey: "mentor.kidaneworl_title",
-      image: "/images/sophor-logo.png",
-      bio: "Family collaborators and community partners who help nominate, host, and amplify stories without seeking the spotlight.",
-      specialties: [
-        "Community Partnerships",
-        "Story Amplification",
-        "Logistics",
-        "Allyship",
-      ],
-      experience: "Organic growth",
-      education: "Community collaborators",
-      achievements: [
-        "Supported 7 empowerment events",
-        "Sustain trust with honorees",
-        "Expand reach to new communities",
-      ],
-      github: "#",
-      linkedin: "#",
-      email: "community@enkuniqu.com",
+      email: "mulu_tsehay@enkuniqu.com",
     },
   ];
 
@@ -127,7 +102,7 @@ export default function MentorsContent() {
 
   return (
     <section
-      id="mentors"
+      id="persons"
       ref={sectionRef}
       className="section-padding bg-background pt-24"
     >
@@ -140,7 +115,7 @@ export default function MentorsContent() {
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold mb-6 fade-in-up">
-            <span className="gradient-text">{t("mentors.title")}</span>
+            <span className="gradient-text">{t("persons.title")}</span>
           </h1>
 
           <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed fade-in-up">
@@ -178,34 +153,34 @@ export default function MentorsContent() {
           </div>
         </div>
 
-        {/* Mentors Grid */}
+        {/* persons Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {allMentors.map((mentor, index) => (
+          {allPersons.map((person, index) => (
             <div key={index} className="institutional-card group fade-in-up">
               <div className="text-center mb-6">
                 <div className="relative mb-4">
                   <img
-                    src={mentor.image || "/placeholder.svg"}
-                    alt={mentor.nameKey ? t(mentor.nameKey) : mentor.name}
+                    src={person.image || "/placeholder.svg"}
+                    alt={person.nameKey ? t(person.nameKey) : person.name}
                     className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/50 transition-colors"
                   />
                   <div className="absolute inset-0 rounded-full bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
 
                 <h3 className="text-xl font-bold mb-1 text-text-primary">
-                  {mentor.nameKey ? t(mentor.nameKey) : mentor.name}
+                  {person.nameKey ? t(person.nameKey) : person.name}
                 </h3>
                 <p className="text-accent font-medium mb-2">
-                  {mentor.titleKey ? t(mentor.titleKey) : mentor.title}
+                  {person.titleKey ? t(person.titleKey) : person.title}
                 </p>
                 <p className="text-text-muted text-sm mb-4">
-                  {mentor.education} • {mentor.experience}
+                  {person.education} • {person.experience}
                 </p>
               </div>
 
               <div className="space-y-4">
                 <p className="text-text-secondary text-sm leading-relaxed">
-                  {mentor.bio}
+                  {person.bio}
                 </p>
 
                 {/* Specialties */}
@@ -214,7 +189,7 @@ export default function MentorsContent() {
                     Specialties
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {mentor.specialties.map((specialty, idx) => (
+                    {person.specialties.map((specialty, idx) => (
                       <span
                         key={idx}
                         className="px-2 py-1 bg-accent/10 text-accent text-xs rounded-full"
@@ -232,7 +207,7 @@ export default function MentorsContent() {
                     Key Achievements
                   </h4>
                   <ul className="space-y-1">
-                    {mentor.achievements.map((achievement, idx) => (
+                    {person.achievements.map((achievement, idx) => (
                       <li
                         key={idx}
                         className="text-text-secondary text-xs flex items-start"
@@ -247,13 +222,13 @@ export default function MentorsContent() {
                 {/* Contact */}
                 <div className="flex justify-center space-x-3 pt-4 border-t border-border">
                   <a
-                    href={`mailto:${mentor.email}`}
+                    href={`mailto:${person.email}`}
                     className="w-8 h-8 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-colors"
                   >
                     <Mail className="w-3 h-3" />
                   </a>
                   <a
-                    href={mentor.github}
+                    href={person.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-8 h-8 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-colors"
@@ -261,7 +236,7 @@ export default function MentorsContent() {
                     <Github className="w-3 h-3" />
                   </a>
                   <a
-                    href={mentor.linkedin}
+                    href={person.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-8 h-8 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-colors"

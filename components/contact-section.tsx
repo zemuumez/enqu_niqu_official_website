@@ -86,7 +86,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-text-primary">Gathering Rhythm</h4>
-                    <p className="text-text-secondary">Award events curated multiple times a year</p>
+                    <p className="text-text-secondary">Award events held twice a year</p>
                     <p className="text-text-secondary">Next gathering: January 6</p>
                   </div>
                 </div>

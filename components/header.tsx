@@ -28,7 +28,7 @@ export default function Header() {
   const navItems = [
     { key: "nav.home", href: "/", isAnchor: false },
     { key: "nav.about", href: "/#about", isAnchor: true },
-    { key: "nav.mentors", href: "/mentors", isAnchor: false },
+    { key: "nav.persons", href: "/founders", isAnchor: false },
     { key: "nav.programs", href: "/programs", isAnchor: false },
     { key: "nav.contact", href: "/contact", isAnchor: false },
   ];
@@ -62,12 +62,9 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 magnetic">
-            <div
-              className="relative w-9 h-9"
-              style={{ width: 36, height: 36 }}
-            >
+            <div className="relative w-9 h-9" style={{ width: 36, height: 36 }}>
               <Image
-                src="/images/enqu_niqu_logo.png"
+                src="/images/EnquNiquLogo.png"
                 alt="ENQU SET NIQU SET"
                 fill
                 className="object-contain"

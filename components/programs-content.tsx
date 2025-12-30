@@ -11,7 +11,7 @@ export default function ProgramsContent() {
 
   const allPrograms = [
     {
-      title: "Annual & Thematic Award Events",
+      title: "Bi-annual & Thematic Award Events",
       duration: "7 events hosted",
       age: "Next gathering: January 6",
       price: "Recognition that restores dignity",
@@ -25,7 +25,7 @@ export default function ProgramsContent() {
       ],
       popular: true,
       level: "Recognition",
-      schedule: "Curated dates across the year",
+      schedule: "Twice yearly gatherings",
     },
     {
       title: "Panel Discussions & Storytelling",

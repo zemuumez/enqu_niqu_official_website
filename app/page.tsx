@@ -2,7 +2,7 @@ import Header from "@/components/header";
 import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
 import ProgramsHighlight from "@/components/programs-highlight";
-import MentorsHighlight from "@/components/mentors-highlight";
+import PersonsHighlight from "@/components/persons-highlight";
 import GalleryHighlight from "@/components/gallery-highlight";
 import ContactHighlight from "@/components/contact-highlight";
 import Footer from "@/components/footer";
@@ -47,7 +47,7 @@ export default function Home() {
         />
         <AboutSection />
         <ProgramsHighlight />
-        <MentorsHighlight />
+        <PersonsHighlight />
         <GalleryHighlight />
         <ContactHighlight />
         <Footer />

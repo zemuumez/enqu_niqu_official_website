@@ -16,7 +16,7 @@ const translations = {
     "nav.home": "Home",
     "nav.about": "About",
     "nav.programs": "Initiatives",
-    "nav.mentors": "Founders",
+    "nav.persons": "Founders",
     "nav.pricing": "Impact",
     "nav.contact": "Contact",
     "nav.signup": "Nominate",
@@ -36,7 +36,7 @@ const translations = {
     "about.description":
       "An award-driven empowerment program and community platform dedicated to honoring the hidden brilliance and resilience of women who have long gone unrecognized.",
     "about.graduates_worked":
-      "Founded by Samuel Geremew with co-founders Mulu Geremew, Weynishèt Geremew, and family collaborators to awaken gems across communities",
+      "Founded by Samuel Geremew with co-founders Mulutsehay Geremew, Weynishèt Geremew, and family collaborators to awaken gems across communities",
     "about.students_enrolled": "Stories Amplified",
     "about.expert_instructors": "Community Partners",
 
@@ -45,18 +45,22 @@ const translations = {
     "programs.summer_camp": "Awards",
     "programs.weekend": "Community Dialogues",
 
-    // Mentors Section
-    "mentors.title": "Founders & Voices",
-    "mentors.description":
+    // persons Section
+    "persons.title": "Founders & Voices",
+    "persons.description":
       "Guided by a family-led founding team and a growing circle of award recipients who inspire through their resilience and purpose.",
-    "mentor.samuel_name": "Samuel Geremew",
-    "mentor.samuel_title": "Founder",
-    "mentor.thomas_name": "Mulu Geremew",
-    "mentor.thomas_title": "Co-founder",
-    "mentor.zemichael_name": "Weynishèt Geremew",
-    "mentor.zemichael_title": "Co-founder",
-    "mentor.kidaneworl_name": "Community Collaborators",
-    "mentor.kidaneworl_title": "Family Partners",
+    "person.samuel_name": "Samuel Geremew",
+    "person.samuel_title": "Founder",
+    "person.mulu_name": "Mulutsehay Geremew",
+    "person.mulu_title": "Co-founder & Marketing Manager",
+    "person.weynshet_name": "Weynshet Geremew",
+    "person.weynshet_title": "Co-founder & CEO",
+    "person.hana_name": "Hana Setargachew",
+    "person.hana_title": "Co-founder & Assistant Manager",
+    "person.asmelash_name": "Asmelash Geremew",
+    "person.asmelash_title": "Financial Manager",
+    "person.zebider_name": "Sister Zebider Zewdie",
+    "person.zebider_title": "Ambassador",
 
     // Contact Section
     "contact.title": "Get in Touch",
@@ -99,7 +103,7 @@ const translations = {
     "nav.home": "Home",
     "nav.about": "About",
     "nav.programs": "Initiatives",
-    "nav.mentors": "Founders",
+    "nav.persons": "Founders",
     "nav.pricing": "Impact",
     "nav.contact": "Contact",
     "nav.signup": "Nominate",
@@ -119,7 +123,7 @@ const translations = {
     "about.description":
       "An award-driven empowerment program and community platform dedicated to honoring the hidden brilliance and resilience of women who have long gone unrecognized.",
     "about.graduates_worked":
-      "Founded by Samuel Geremew with co-founders Mulu Geremew, Weynishèt Geremew, and family collaborators to awaken gems across communities",
+      "Founded by Samuel Geremew with co-founders Mulutsehay Geremew, Weynishèt Geremew, and family collaborators to awaken gems across communities",
     "about.students_enrolled": "Stories Amplified",
     "about.expert_instructors": "Community Partners",
 
@@ -128,19 +132,22 @@ const translations = {
     "programs.summer_camp": "Awards",
     "programs.weekend": "Community Dialogues",
 
-    // Mentors Section
-    "mentors.title": "Founders & Voices",
-    "mentors.description":
+    // persons Section
+    "persons.title": "Founders & Voices",
+    "persons.description":
       "Guided by a family-led founding team and a growing circle of award recipients who inspire through their resilience and purpose.",
-    "mentor.samuel_name": "Samuel Geremew",
-    "mentor.samuel_title": "Founder",
-    "mentor.thomas_name": "Mulu Geremew",
-    "mentor.thomas_title": "Co-founder",
-    "mentor.zemichael_name": "Weynishèt Geremew",
-    "mentor.zemichael_title": "Co-founder",
-    "mentor.kidaneworl_name": "Community Collaborators",
-    "mentor.kidaneworl_title": "Family Partners",
-
+    "person.samuel_name": "Samuel Geremew",
+    "person.samuel_title": "Founder",
+    "person.mulu_name": "Mulu Tsehay Geremew",
+    "person.mulu_title": "Co-founder & Marketing Manager",
+    "person.weynshet_name": "Weynshet Geremew",
+    "person.weynshet_title": "Co-founder & CEO",
+    "person.hana_name": "Hana Setargachew",
+    "person.hana_title": "Co-founder & Assistant Manager",
+    "person.asmelash_name": "Asmelash Geremew",
+    "person.asmelash_title": "Financial Manager",
+    "person.zebider_name": "Sister Zebider Zewdie",
+    "person.zebider_title": "Ambassador",
     // Contact Section
     "contact.title": "Get in Touch",
     "contact.description":
