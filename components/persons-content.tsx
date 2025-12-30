@@ -52,6 +52,26 @@ export default function personsContent() {
       email: "samuel@enkuniqu.com",
     },
     {
+      nameKey: "person.hana_name",
+      titleKey: "person.hana_title",
+      image: "/images/Persons/Hana_Setargachew.png",
+      bio: "Co-founder centering women at every decision, ensuring ENQU SET NIQU SET stays deeply human and impact-driven.",
+      specialties: [
+        "Program Stewardship",
+        "Authenticity",
+        "Community Care",
+        "Event Design",
+      ],
+      experience: "Family-led leadership",
+      education: "Co-founder, ENQU SET NIQU SET",
+      achievements: [
+        "Co-built a women-centered leadership team",
+        "Shapes award categories with care",
+        "Keeps events grounded in purpose",
+      ],
+      email: "hanasetargachewy@enkuniqu.com",
+    },
+    {
       nameKey: "person.mulu_name",
       titleKey: "person.mulu_title",
       image: "/images/Persons/Mulu_Tsehay_Geremew.png",
@@ -70,6 +90,26 @@ export default function personsContent() {
         "Keeps events grounded in purpose",
       ],
       email: "mulu_tsehay@enkuniqu.com",
+    },
+    {
+      nameKey: "person.asmelash_name",
+      titleKey: "person.asmelash_title",
+      image: "/images/Persons/Asmelash_Geremew.png",
+      bio: "Co-founder centering women at every decision, ensuring ENQU SET NIQU SET stays deeply human and impact-driven.",
+      specialties: [
+        "Program Stewardship",
+        "Authenticity",
+        "Community Care",
+        "Event Design",
+      ],
+      experience: "Family-led leadership",
+      education: "Co-founder, ENQU SET NIQU SET",
+      achievements: [
+        "Co-built a women-centered leadership team",
+        "Shapes award categories with care",
+        "Keeps events grounded in purpose",
+      ],
+      email: "asmelashgeremew@enkuniqu.com",
     },
   ];
 

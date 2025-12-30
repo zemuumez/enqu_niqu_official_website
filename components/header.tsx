@@ -96,7 +96,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link href="/contact" className="btn-modern magnetic">
-              Nominate a Woman
+              Contact Us
             </Link>
           </div>
 

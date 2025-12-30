@@ -1,50 +1,62 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 export default function LogoCloudSection() {
   const logos = [
-    "ዕንቁ ሴት ንቁ ሴት",
-    "Award Gatherings",
-    "Storytelling Circles",
-    "Community Impact",
-    "Podcast (Upcoming)",
-    "ዕንቁ ሴት ንቁ ሴት", // Duplicate for seamless loop
-    "Award Gatherings",
-    "Storytelling Circles",
-    "Community Impact",
-    "Podcast (Upcoming)",
-  ]
+    "Dashen Bank",
+    "Guenet Hotel",
+    "Shega chewata",
+    "Samilos Media and Communications",
+    "Weyn Coffee",
+    "Metemamen MicroFinance",
+    "Abronet Digital Equib",
+    "Hagere Tv",
+    "Marya's decor",
+    "Dashen Bank", // Duplicate for seamless loop
+    "Guenet Hotel",
+    "Shega chewata",
+    "Samilos Media and Communications",
+    "Weyn Coffee",
+    "Metemamen MicroFinance",
+    "Abronet Digital Equib",
+    "Hagere Tv",
+    "Marya's decor",
+  ];
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isHovered, setIsHovered] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
+    const container = containerRef.current;
+    if (!container) return;
 
     // Add animation class
-    container.classList.add("animate-marquee")
+    container.classList.add("animate-marquee");
 
-    // Pause animation on hover
-    const handleMouseEnter = () => setIsHovered(true)
-    const handleMouseLeave = () => setIsHovered(false)
+    // // Pause animation on hover
+    // const handleMouseEnter = () => setIsHovered(true);
+    // const handleMouseLeave = () => setIsHovered(false);
 
-    container.addEventListener("mouseenter", handleMouseEnter)
-    container.addEventListener("mouseleave", handleMouseLeave)
+    // container.addEventListener("mouseenter", handleMouseEnter);
+    // container.addEventListener("mouseleave", handleMouseLeave);
 
-    return () => {
-      container.removeEventListener("mouseenter", handleMouseEnter)
-      container.removeEventListener("mouseleave", handleMouseLeave)
-    }
-  }, [])
+    // return () => {
+    //   container.removeEventListener("mouseenter", handleMouseEnter);
+    //   container.removeEventListener("mouseleave", handleMouseLeave);
+    // };
+  }, []);
 
   return (
     <section className="py-12 overflow-hidden bg-gradient-to-r from-amber-50 via-orange-50/70 to-rose-50/70">
       <style jsx>{`
         @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); } /* Half the width to loop seamlessly with duplicates */
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          } /* Half the width to loop seamlessly with duplicates */
         }
         .animate-marquee {
           animation: marquee 30s linear infinite;
@@ -53,7 +65,10 @@ export default function LogoCloudSection() {
           animation-play-state: paused;
         }
       `}</style>
-      <div ref={containerRef} className={`flex whitespace-nowrap ${isHovered ? "paused" : ""}`}>
+      <div
+        ref={containerRef}
+        className={`flex whitespace-nowrap ${isHovered ? "paused" : ""}`}
+      >
         {logos.map((logo, index) => (
           <div
             key={index}
@@ -64,5 +79,5 @@ export default function LogoCloudSection() {
         ))}
       </div>
     </section>
-  )
+  );
 }
