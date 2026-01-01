@@ -8,100 +8,75 @@ interface SessionImages {
   images: string[];
 }
 
-export default function GalleryContent() {
+interface GalleryContentProps {
+  sessionsData: SessionImages[];
+}
+
+export default function GalleryContent({ sessionsData }: GalleryContentProps) {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeSession, setActiveSession] = useState(1);
+  const [activeSession, setActiveSession] = useState<number>(
+    sessionsData.length > 0 ? sessionsData[0].session : 1
+  );
   const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const sessionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+  const imageRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  // Organize images by session
-  const sessions: SessionImages[] = [
-    {
-      session: 1,
-      images: [
-        "/images/Session1/2025-12-14 02.50.22.jpg",
-        "/images/Session1/2025-12-14 02.51.02.jpg",
-        "/images/Session1/2025-12-14 02.51.14.jpg",
-        "/images/Session1/2025-12-14 02.51.33.jpg",
-        "/images/Session1/2025-12-14 02.51.46.jpg",
-      ],
-    },
-    {
-      session: 2,
-      images: [
-        "/images/Session2/2025-12-14 02.53.17.jpg",
-        "/images/Session2/2025-12-14 02.53.23.jpg",
-        "/images/Session2/2025-12-14 02.53.29.jpg",
-        "/images/Session2/2025-12-14 02.53.34.jpg",
-        "/images/Session2/2025-12-14 02.53.40.jpg",
-        "/images/Session2/2025-12-14 02.53.44.jpg",
-        "/images/Session2/2025-12-14 02.54.16.jpg",
-        "/images/Session2/2025-12-14 02.54.21.jpg",
-        "/images/Session2/2025-12-14 02.54.43.jpg",
-        "/images/Session2/2025-12-14 02.54.48.jpg",
-      ],
-    },
-    {
-      session: 3,
-      images: [
-        "/images/Session3/2025-12-14 02.55.19.jpg",
-        "/images/Session3/2025-12-14 02.55.25.jpg",
-        "/images/Session3/2025-12-14 02.55.34.jpg",
-        "/images/Session3/2025-12-14 02.55.40.jpg",
-        "/images/Session3/2025-12-14 02.56.31.jpg",
-        "/images/Session3/2025-12-14 02.56.38.jpg",
-        "/images/Session3/2025-12-14 02.56.45.jpg",
-        "/images/Session3/2025-12-14 02.57.00.jpg",
-        "/images/Session3/2025-12-14 02.57.08.jpg",
-      ],
-    },
-    {
-      session: 4,
-      images: [
-        "/images/Session4/2025-12-14 02.57.31.jpg",
-        "/images/Session4/2025-12-14 02.57.37.jpg",
-        "/images/Session4/2025-12-14 02.57.41.jpg",
-        "/images/Session4/2025-12-14 02.57.46.jpg",
-        "/images/Session4/2025-12-14 02.58.08.jpg",
-        "/images/Session4/2025-12-14 02.58.30.jpg",
-        "/images/Session4/2025-12-14 02.58.35.jpg",
-        "/images/Session4/2025-12-14 02.58.45.jpg",
-        "/images/Session4/2025-12-14 02.58.52.jpg",
-        "/images/Session4/2025-12-14 02.58.57.jpg",
-        "/images/Session4/2025-12-14 02.59.04.jpg",
-        "/images/Session4/2025-12-14 02.59.52.jpg",
-        "/images/Session4/2025-12-14 03.01.10.jpg",
-        "/images/Session4/2025-12-14 03.01.22.jpg",
-        "/images/Session4/2025-12-14 03.01.36.jpg",
-        "/images/Session4/2025-12-14 03.01.46.jpg",
-        "/images/Session4/2025-12-14 03.01.58.jpg",
-        "/images/Session4/2025-12-14 03.02.07.jpg",
-      ],
-    },
-    {
-      session: 6,
-      images: [
-        "/images/Session6/photo_2025-12-14 02.31.51.jpeg",
-        "/images/Session6/photo_2025-12-14 02.33.16.jpeg",
-        "/images/Session6/photo_2025-12-14 02.33.38.jpeg",
-        "/images/Session6/photo_2025-12-14 02.33.48.jpeg",
-        "/images/Session6/photo_2025-12-14 02.34.16.jpeg",
-      ],
-    },
-    {
-      session: 7,
-      images: [
-        "/images/Session7/photo_2025-12-14 02.31.29.jpeg",
-        "/images/Session7/photo_2025-12-14 02.31.36.jpeg",
-        "/images/Session7/photo_2025-12-14 02.31.39.jpeg",
-        "/images/Session7/photo_2025-12-14 02.31.43.jpeg",
-        "/images/Session7/photo_2025-12-14 02.31.46.jpeg",
-      ],
-    },
-  ];
+  // Use the dynamically loaded sessions data
+  const sessions = sessionsData;
 
-  // Track scroll position and determine active session
+  // Use IntersectionObserver to show images as they enter viewport
+  useEffect(() => {
+    const imageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const imageKey = entry.target.getAttribute("data-image-key");
+            if (imageKey) {
+              setVisibleImages((prev) => {
+                if (!prev.has(imageKey)) {
+                  return new Set([...prev, imageKey]);
+                }
+                return prev;
+              });
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of image is visible
+        rootMargin: "150px", // Start loading 150px before image enters viewport
+      }
+    );
+
+    // Observe images using querySelector to find all image containers
+    const observeImages = () => {
+      if (containerRef.current) {
+        const imageContainers =
+          containerRef.current.querySelectorAll("[data-image-key]");
+        imageContainers.forEach((container) => {
+          imageObserver.observe(container);
+        });
+      }
+    };
+
+    // Observe immediately and also after a short delay to catch any late-rendered images
+    observeImages();
+    const timeoutId = setTimeout(observeImages, 200);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (containerRef.current) {
+        const imageContainers =
+          containerRef.current.querySelectorAll("[data-image-key]");
+        imageContainers.forEach((container) => {
+          imageObserver.unobserve(container);
+        });
+      }
+    };
+  }, [sessions]);
+
+  // Track scroll position to determine active session
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -111,7 +86,7 @@ export default function GalleryContent() {
       const viewportCenter = scrollTop + windowHeight * 0.5;
 
       // Find which session is currently in view
-      let newActiveSession = 1;
+      let newActiveSession = sessions[0]?.session || 1;
       let closestDistance = Infinity;
 
       sessions.forEach((sessionData) => {
@@ -133,42 +108,6 @@ export default function GalleryContent() {
       });
 
       setActiveSession(newActiveSession);
-
-      // Show images progressively based on scroll within each session
-      sessions.forEach((sessionData) => {
-        const sessionElement = sessionRefs.current[sessionData.session];
-        if (sessionElement) {
-          const rect = sessionElement.getBoundingClientRect();
-          const elementTop = rect.top + window.scrollY;
-          const elementBottom = elementTop + rect.height;
-
-          // Calculate scroll progress within this session
-          const sessionStart = elementTop;
-          const sessionEnd = elementBottom;
-          const sessionHeight = sessionEnd - sessionStart;
-          const scrollProgressInSession = Math.max(
-            0,
-            Math.min(
-              1,
-              (scrollTop + windowHeight * 0.3 - sessionStart) / sessionHeight
-            )
-          );
-
-          // Show images progressively as user scrolls through the session
-          sessionData.images.forEach((image, index) => {
-            const imageThreshold =
-              (index + 1) / (sessionData.images.length + 1);
-            if (scrollProgressInSession >= imageThreshold) {
-              setVisibleImages((prev) => {
-                if (!prev.has(image)) {
-                  return new Set([...prev, image]);
-                }
-                return prev;
-              });
-            }
-          });
-        }
-      });
     };
 
     // Use requestAnimationFrame for smoother scrolling
@@ -187,7 +126,7 @@ export default function GalleryContent() {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [sessions]);
 
   return (
     <section
@@ -199,7 +138,7 @@ export default function GalleryContent() {
         {/* Header */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6">
-            <span className="w-2 h-2 bg-accent rounded-full mr-2"></span>
+            {/* <span className="w-2 h-2 bg-accent rounded-full mr-2"></span> */}
             {t("nav.gallery")}
           </div>
 
@@ -274,13 +213,17 @@ export default function GalleryContent() {
                   {sessionData.images.map((image, index) => (
                     <div
                       key={`${sessionData.session}-${index}`}
+                      ref={(el) => {
+                        imageRefs.current[image] = el;
+                      }}
+                      data-image-key={image}
                       className={`relative overflow-hidden rounded-xl shadow-lg border border-border transition-all duration-1000 ${
                         visibleImages.has(image)
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-8"
                       }`}
                       style={{
-                        transitionDelay: `${index * 100}ms`,
+                        transitionDelay: `${index * 50}ms`,
                       }}
                     >
                       <img

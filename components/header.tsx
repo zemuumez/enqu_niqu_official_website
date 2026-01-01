@@ -30,6 +30,7 @@ export default function Header() {
     { key: "nav.about", href: "/#about", isAnchor: true },
     { key: "nav.persons", href: "/founders", isAnchor: false },
     { key: "nav.programs", href: "/programs", isAnchor: false },
+    { key: "nav.gallery", href: "/gallery", isAnchor: false },
     { key: "nav.contact", href: "/contact", isAnchor: false },
   ];
 

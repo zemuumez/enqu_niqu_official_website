@@ -30,8 +30,8 @@ export default function Home() {
     }
   };
 
-  const session6Images = readPublicImages(session6Dir, "/images/Session6");
   const session7Images = readPublicImages(session7Dir, "/images/Session7");
+  const session6Images = readPublicImages(session6Dir, "/images/Session6");
 
   return (
     <LanguageProvider>
@@ -42,8 +42,8 @@ export default function Home() {
         <LogoCloudSection />
         {/* <AwardsShowcase /> */}
         <FilmRealScroll
-          previousImages={session6Images}
-          upcomingImages={session7Images}
+          previousImages={session7Images}
+          upcomingImages={session6Images}
         />
         <AboutSection />
         <ProgramsHighlight />

@@ -12,45 +12,45 @@ interface FilmFrame {
 
 // Default placeholder frames (used only when no images are provided)
 const defaultPreviousFrames: FilmFrame[] = [
-  {
-    id: "1",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Selamawit Bekele",
-    session: "Founding Gathering",
-  },
-  {
-    id: "2",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Hanan Mohammed",
-    session: "Founding Gathering",
-  },
-  {
-    id: "3",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Lensa Adugna",
-    session: "Founding Gathering",
-  },
+  // {
+  //   id: "1",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Selamawit Bekele",
+  //   session: "Founding Gathering",
+  // },
+  // {
+  //   id: "2",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Hanan Mohammed",
+  //   session: "Founding Gathering",
+  // },
+  // {
+  //   id: "3",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Lensa Adugna",
+  //   session: "Founding Gathering",
+  // },
 ];
 
 const defaultUpcomingFrames: FilmFrame[] = [
-  {
-    id: "8",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Yeshi Desta",
-    session: "Healthcare Heroes",
-  },
-  {
-    id: "9",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Alem Hailu",
-    session: "Healthcare Heroes",
-  },
-  {
-    id: "10",
-    image: "/placeholder.svg?height=300&width=300",
-    name: "Meseret Bekele",
-    session: "Artisan Masters",
-  },
+  // {
+  //   id: "8",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Yeshi Desta",
+  //   session: "Healthcare Heroes",
+  // },
+  // {
+  //   id: "9",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Alem Hailu",
+  //   session: "Healthcare Heroes",
+  // },
+  // {
+  //   id: "10",
+  //   image: "/placeholder.svg?height=300&width=300",
+  //   name: "Meseret Bekele",
+  //   session: "Artisan Masters",
+  // },
 ];
 
 // Simple in-file shuffle (Fisher-Yates)

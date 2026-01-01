@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true)
@@ -52,13 +53,35 @@ export default function LoadingScreen() {
   return (
     <div className="loading-screen">
       <div className="text-center space-y-8">
+        {/* Logo with Spinner */}
+        <div className="relative flex items-center justify-center">
+          {/* Spinner Ring */}
+          <div className="absolute w-32 h-32 border-4 border-accent/20 border-t-accent rounded-full animate-spin"></div>
+          
+          {/* Logo */}
+          <div className="relative z-10 w-24 h-24">
+            <Image
+              src="/images/enqu_niqu_logo.png"
+              alt="ENQU SET NIQU SET Logo"
+              fill
+              className="object-contain animate-pulse"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Loading Text */}
         <div className="loading-text opacity-100">
           {isLoading ? "ዕንቁ ሴት ንቁ ሴት" : "Loading..."}
         </div>
-        <div className="w-64 h-1 bg-border rounded-full overflow-hidden">
-          <div className="h-full bg-accent transition-all duration-100 ease-out" style={{ width: `${progress}%` }} />
+
+        {/* Progress Bar */}
+        <div className="w-64 h-1 bg-border rounded-full overflow-hidden mx-auto">
+          <div 
+            className="h-full bg-accent transition-all duration-100 ease-out" 
+            style={{ width: `${progress}%` }} 
+          />
         </div>
-        {isLoading && <div className="text-sm text-text-muted">{progress}%</div>}
       </div>
     </div>
   )
