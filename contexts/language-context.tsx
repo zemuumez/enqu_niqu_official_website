@@ -94,7 +94,7 @@ const translations = {
     "bootcamp.feature_5": "Podcast archive launching soon",
 
     // Gallery Page
-    "gallery.title": "ዕንቁ ሴት ንቁ ሴት Story Archive",
+    "gallery.title": "ዕንቁ ሴት ንቁ ሴት ምስክሮች",
     "gallery.subtitle":
       "Scenes from award gatherings, storytelling circles, and a community that keeps recognition alive.",
   },
@@ -180,7 +180,7 @@ const translations = {
     "bootcamp.feature_5": "Podcast archive launching soon",
 
     // Gallery Page
-    "gallery.title": "ዕንቁ ሴት ንቁ ሴት Story Archive",
+    "gallery.title": "ዕንቁ ሴት ንቁ ሴት ምስክሮች",
     "gallery.subtitle":
       "የሽልማት ምስክሮች፣ የተናጋሪ ውይይቶች እና የእውቅናን የሚያደግ ማህበረሰብ ቅንጥቦች።",
   },

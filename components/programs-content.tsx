@@ -82,12 +82,12 @@ export default function ProgramsContent() {
     >
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
-        <div className="text-center mb-16 py-5">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6 fade-in-up">
+        <div className="text-center mb-16 py-3">
+          {/* <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6 fade-in-up">
             Our Initiatives
-          </div>
+          </div> */}
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 fade-in-up">
+          <h1 className="text-4xl md:text-5xl text-accent font-bold mb-11 fade-in-up">
             <span className="gradient-text">Recognition as a Catalyst</span>
           </h1>
 

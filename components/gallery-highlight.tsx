@@ -12,7 +12,7 @@ export default function GalleryHighlight() {
     {
       src: "/images/Session1/2025-12-14 02.54.48.jpg",
       alt: "Women honored on stage",
-      title: "Award Gathering",
+      title: "Women honored on stage",
     },
     {
       src: "/images/Session2/2025-12-14 02.57.00.jpg",
@@ -27,7 +27,7 @@ export default function GalleryHighlight() {
     {
       src: "/images/Session4/2026-01-01 11.26.12.jpg",
       alt: "Woman sharing her journey",
-      title: "Awakened Voices",
+      title: "Woman sharing her journey",
     },
   ];
 

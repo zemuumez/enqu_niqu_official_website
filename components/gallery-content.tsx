@@ -137,8 +137,7 @@ export default function GalleryContent({ sessionsData }: GalleryContentProps) {
       <div className="container mx-auto px-4 lg:px-12 py-24">
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6">
-            {/* <span className="w-2 h-2 bg-accent rounded-full mr-2"></span> */}
+          <div className="text-sm uppercase tracking-[0.35em] text-accent py-5 font-semibold">
             {t("nav.gallery")}
           </div>
 

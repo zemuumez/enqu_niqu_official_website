@@ -52,9 +52,9 @@ export default function ContactContent() {
     >
       <div className="container mx-auto px-4 lg:px-12">
         {/* Header */}
-        <div className="text-center mb-16 py-5">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6 fade-in-up">
-            <MessageCircle className="w-4 h-4 mr-2" />
+        <div className="text-center mb-16">
+          <div className="uppercase tracking-[0.35em] text-accent py-5 font-semibold">
+            {/* <MessageCircle className="w-4 h-4 mr-2" /> */}
             Contact Us
           </div>
 

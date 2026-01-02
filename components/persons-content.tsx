@@ -144,17 +144,17 @@ export default function personsContent() {
     <section
       id="persons"
       ref={sectionRef}
-      className="section-padding bg-background pt-24"
+      className="section-padding bg-background pt-11"
     >
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-accent/10 border border-accent/20 rounded-full text-sm text-accent mb-6 fade-in-up">
+          {/* <div className="inline-flex items-center px-4 py-2 rounded-full text-sm text-accent mb-6 fade-in-up">
             <Users className="w-4 h-4 mr-2" />
             Founders & Voices
-          </div>
+          </div> */}
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 fade-in-up">
+          <h1 className="text-4xl md:text-5xl text-accent font-bold mb-11 fade-in-up">
             <span className="gradient-text">{t("persons.title")}</span>
           </h1>
 

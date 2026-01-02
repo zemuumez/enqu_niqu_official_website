@@ -9,30 +9,70 @@ import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 import { usePathname } from "next/navigation";
 
+const navItems = [
+  { key: "nav.home", href: "/", isAnchor: false },
+  { key: "nav.about", href: "/#about", isAnchor: true },
+  { key: "nav.persons", href: "/founders", isAnchor: false },
+  { key: "nav.programs", href: "/programs", isAnchor: false },
+  { key: "nav.gallery", href: "/gallery", isAnchor: false },
+  { key: "nav.contact", href: "/contact", isAnchor: false },
+];
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeAnchor, setActiveAnchor] = useState<string | null>(null);
   const { t } = useLanguage();
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
+    // Reset active anchor when navigating away from home
+    if (pathname !== "/") {
+      setActiveAnchor(null);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      // Update active anchor on home page
+      if (pathname === "/") {
+        const anchors = navItems
+          .filter((item) => item.isAnchor)
+          .map((item) => item.href.split("#")[1]);
+        
+        let currentActive: string | null = null;
+        const scrollPosition = window.scrollY + 100; // Offset for header
+        
+        anchors.forEach((anchorId) => {
+          const element = document.getElementById(anchorId);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            const elementTop = rect.top + window.scrollY;
+            const elementBottom = elementTop + rect.height;
+            
+            if (
+              scrollPosition >= elementTop - 200 &&
+              scrollPosition < elementBottom
+            ) {
+              currentActive = anchorId;
+            }
+          }
+        });
+        
+        setActiveAnchor(currentActive);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navItems = [
-    { key: "nav.home", href: "/", isAnchor: false },
-    { key: "nav.about", href: "/#about", isAnchor: true },
-    { key: "nav.persons", href: "/founders", isAnchor: false },
-    { key: "nav.programs", href: "/programs", isAnchor: false },
-    { key: "nav.gallery", href: "/gallery", isAnchor: false },
-    { key: "nav.contact", href: "/contact", isAnchor: false },
-  ];
+    if (pathname === "/") {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      handleScroll(); // Initial check
+      
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [pathname]);
 
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -48,6 +88,23 @@ export default function Header() {
       }
     }
     setIsMenuOpen(false);
+  };
+
+  // Check if a nav item is active
+  const isActive = (href: string, isAnchor: boolean) => {
+    if (isAnchor) {
+      // For anchor links, check if we're on home page and it's the active anchor
+      if (pathname === "/" && href.startsWith("/#")) {
+        const targetId = href.split("#")[1];
+        return activeAnchor === targetId;
+      }
+      return false;
+    }
+    // For regular routes, check if pathname matches
+    if (href === "/") {
+      return pathname === "/" && !activeAnchor; // Home is active only if no anchor is active
+    }
+    return pathname.startsWith(href);
   };
 
   return (
@@ -82,16 +139,31 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                onClick={(e) => handleAnchorClick(e, item.href, item.isAnchor)}
-                className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors duration-300 magnetic"
-              >
-                {t(item.key)}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = isActive(item.href, item.isAnchor);
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  onClick={(e) => handleAnchorClick(e, item.href, item.isAnchor)}
+                  className={`relative text-sm font-medium transition-all duration-300 magnetic group ${
+                    active
+                      ? "text-text-primary"
+                      : "text-text-secondary hover:text-text-primary"
+                  }`}
+                >
+                  <span className="relative z-10">{t(item.key)}</span>
+                  {/* Underline effect */}
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                      active
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTA Button */}
@@ -119,18 +191,29 @@ export default function Header() {
         {isMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border">
             <nav className="container mx-auto px-6 py-8 space-y-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  onClick={(e) =>
-                    handleAnchorClick(e, item.href, item.isAnchor)
-                  }
-                  className="block text-lg font-medium text-text-secondary hover:text-text-primary transition-colors"
-                >
-                  {t(item.key)}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const active = isActive(item.href, item.isAnchor);
+                return (
+                  <Link
+                    key={item.key}
+                    href={item.href}
+                    onClick={(e) =>
+                      handleAnchorClick(e, item.href, item.isAnchor)
+                    }
+                    className={`relative block text-lg font-medium transition-all duration-300 py-2 ${
+                      active
+                        ? "text-text-primary"
+                        : "text-text-secondary hover:text-text-primary"
+                    }`}
+                  >
+                    <span className="relative z-10">{t(item.key)}</span>
+                    {/* Active indicator for mobile */}
+                    {active && (
+                      <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r" />
+                    )}
+                  </Link>
+                );
+              })}
               <Link
                 href="/contact"
                 className="btn-modern w-full mt-8"
