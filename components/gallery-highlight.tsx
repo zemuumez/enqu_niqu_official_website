@@ -10,22 +10,22 @@ export default function GalleryHighlight() {
 
   const featuredImages = [
     {
-      src: "/images/TeachingAndLearning/workshop.jpg",
+      src: "/images/Session1/2025-12-14 02.54.48.jpg",
       alt: "Women honored on stage",
       title: "Award Gathering",
     },
     {
-      src: "/images/TeachingAndLearning/insa2.jpg",
+      src: "/images/Session2/2025-12-14 02.57.00.jpg",
       alt: "Panel conversation",
       title: "Storytelling Panel",
     },
     {
-      src: "/images/TeachingAndLearning/sss.jpg",
+      src: "/images/Session3/2025-12-14 03.02.07.jpg",
       alt: "Community celebrating honorees",
       title: "Community Celebration",
     },
     {
-      src: "/images/TeachingAndLearning/workshop2.jpg",
+      src: "/images/Session4/2026-01-01 11.26.12.jpg",
       alt: "Woman sharing her journey",
       title: "Awakened Voices",
     },
@@ -85,8 +85,8 @@ export default function GalleryHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Award evenings, panels, and intimate conversations where resilience is honored and unheard stories find the
-            spotlight.
+            Award evenings, panels, and intimate conversations where resilience
+            is honored and unheard stories find the spotlight.
           </p>
         </div>
 
@@ -134,7 +134,9 @@ export default function GalleryHighlight() {
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-light mb-2">30+</div>
-            <div className="text-text-secondary text-sm">Honorees celebrated</div>
+            <div className="text-text-secondary text-sm">
+              Honorees celebrated
+            </div>
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-light mb-2">25+</div>
@@ -142,23 +144,25 @@ export default function GalleryHighlight() {
           </div>
           <div className="text-center">
             <div className="text-3xl md:text-4xl font-light mb-2">Podcast</div>
-            <div className="text-text-secondary text-sm">Stories soon on air</div>
+            <div className="text-text-secondary text-sm">
+              Stories soon on air
+            </div>
           </div>
         </div>
 
         {/* CTA Section */}
         <div
-            className={`text-center transition-all duration-1000 delay-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
+          className={`text-center transition-all duration-1000 delay-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
         >
           <div className="max-w-2xl mx-auto space-y-8">
             <h3 className="text-2xl md:text-3xl font-light">
               Explore Our Story Archive
             </h3>
             <p className="text-text-secondary">
-              Discover moments from award nights, storytelling circles, and the community that believes recognition is a
-              catalyst.
+              Discover moments from award nights, storytelling circles, and the
+              community that believes recognition is a catalyst.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
