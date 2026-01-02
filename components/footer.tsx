@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   Facebook,
   Twitter,
+  Youtube,
   Instagram,
   Linkedin,
   Mail,
@@ -17,10 +18,10 @@ export default function Footer() {
   const { t } = useLanguage();
 
   const quickLinks = [
-    { key: "nav.home", href: "#home" },
+    { key: "nav.home", href: "/" },
     { key: "nav.about", href: "#about" },
-    { key: "nav.programs", href: "#programs" },
-    { key: "nav.mentors", href: "#mentors" },
+    { key: "nav.programs", href: "/programs" },
+    { key: "nav.persons", href: "/founders" },
   ];
 
   const programs = [
@@ -68,10 +69,10 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.youtube.com/@Enkuconsultancy"
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
               >
-                <Twitter className="w-5 h-5" />
+                <Youtube className="w-5 h-5" />
               </a>
               <a
                 href="#"

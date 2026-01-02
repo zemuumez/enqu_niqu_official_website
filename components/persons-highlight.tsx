@@ -198,7 +198,7 @@ export default function PersonsHighlight() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/persons"
+                href="/founders"
                 className="btn-modern magnetic inline-flex items-center"
               >
                 <span>Meet Our People</span>
