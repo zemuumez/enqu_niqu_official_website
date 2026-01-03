@@ -26,7 +26,7 @@ const sessionsData: Session[] = [
   {
     id: 1,
     title: "Founding Gathering",
-    date: "Jan 6",
+    date: "Jan 3",
     location: "Addis Ababa",
     description:
       "Honoring the first awakened gems who sparked ENQU SET NIQU SET.",

@@ -78,7 +78,7 @@ export default function HeroSection() {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-light mb-2">Jan 6</div>
+              <div className="text-2xl md:text-3xl font-light mb-2">Jan 3</div>
               <div className="text-sm text-text-muted">
                 Next award gathering
               </div>
