@@ -16,8 +16,18 @@ import path from "path";
 
 export default function Home() {
   // Read images from public folders (server-side)
-  const session6Dir = path.join(process.cwd(), "public", "images", "Session6");
-  const session7Dir = path.join(process.cwd(), "public", "images", "Session7");
+  const sessionLastDir = path.join(
+    process.cwd(),
+    "public",
+    "images",
+    "Session7"
+  );
+  const sessionNowDir = path.join(
+    process.cwd(),
+    "public",
+    "images",
+    "Session8"
+  );
 
   const readPublicImages = (dir: string, publicBase: string) => {
     try {
@@ -30,8 +40,11 @@ export default function Home() {
     }
   };
 
-  const session7Images = readPublicImages(session7Dir, "/images/Session7");
-  const session6Images = readPublicImages(session6Dir, "/images/Session6");
+  const sessionNowImages = readPublicImages(sessionNowDir, "/images/Session8");
+  const sessionLastImages = readPublicImages(
+    sessionLastDir,
+    "/images/Session7"
+  );
 
   return (
     <LanguageProvider>
@@ -42,8 +55,8 @@ export default function Home() {
         <LogoCloudSection />
         {/* <AwardsShowcase /> */}
         <FilmRealScroll
-          previousImages={session7Images}
-          upcomingImages={session6Images}
+          previousImages={sessionNowImages}
+          upcomingImages={sessionLastImages}
         />
         <AboutSection />
         <ProgramsHighlight />
