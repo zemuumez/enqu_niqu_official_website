@@ -130,7 +130,7 @@ export default function personsContent() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -169,7 +169,7 @@ export default function personsContent() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
           <div className="text-center fade-in-up">
             <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
-              7
+              8
             </div>
             <div className="text-text-secondary">Empowerment gatherings</div>
           </div>

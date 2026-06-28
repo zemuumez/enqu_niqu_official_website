@@ -41,7 +41,7 @@ export default function GalleryHighlight() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -129,7 +129,7 @@ export default function GalleryHighlight() {
           }`}
         >
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">7</div>
+            <div className="text-3xl md:text-4xl font-light mb-2">8</div>
             <div className="text-text-secondary text-sm">Events captured</div>
           </div>
           <div className="text-center">

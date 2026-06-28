@@ -20,7 +20,7 @@ export default function AboutSection() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -95,7 +95,7 @@ export default function AboutSection() {
             <div className="grid grid-cols-2 gap-8">
               <div className="text-center lg:text-left">
                 <div className="text-5xl md:text-6xl font-light mb-2">
-                  <CountUp target={7} isVisible={isVisible} />
+                  <CountUp target={8} isVisible={isVisible} />
                 </div>
                 <div className="text-text-secondary">
                   Empowerment events held
