@@ -9,6 +9,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "react/compiler-runtime": "react-compiler-runtime",
+    };
+    return config;
+  },
 }
 
 export default nextConfig

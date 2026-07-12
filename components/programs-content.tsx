@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock, Users, CheckCircle, Star } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
+import { client } from "@/lib/sanity/sanity.client";
+import { programsQuery } from "@/lib/sanity/sanity.queries";
 
 export default function ProgramsContent() {
   const { t } = useLanguage();
@@ -46,6 +48,22 @@ export default function ProgramsContent() {
       schedule: "Releases between gatherings",
     },
   ];
+
+  const [programs, setPrograms] = useState<any[]>(allPrograms);
+
+  useEffect(() => {
+    async function fetchPrograms() {
+      try {
+        const data = await client.fetch(programsQuery);
+        if (data && data.length > 0) {
+          setPrograms(data);
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for programs, using static fallback:", err);
+      }
+    }
+    fetchPrograms();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -100,7 +118,7 @@ export default function ProgramsContent() {
 
         {/* Programs Grid */}
         <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
-          {allPrograms.map((program, index) => (
+          {programs.map((program, index) => (
             <div
               key={index}
               className={`institutional-card relative ${

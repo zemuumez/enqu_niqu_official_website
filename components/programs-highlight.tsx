@@ -4,13 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Clock, Users } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 import Link from "next/link";
+import { client } from "@/lib/sanity/sanity.client";
+import { programsQuery } from "@/lib/sanity/sanity.queries";
 
 export default function ProgramsHighlight() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const featuredPrograms = [
+  const defaultPrograms = [
     {
       title: "Bi-annual & Thematic Award Events",
       duration: "7 gatherings hosted",
@@ -26,36 +28,6 @@ export default function ProgramsHighlight() {
       ],
       popular: true,
     },
-    // {
-    //   title: "Panel Discussions & Storytelling",
-    //   duration: "Every gathering",
-    //   age: "Open to girls & women",
-    //   price: "Honest, unpolished stories",
-    //   description:
-    //     "Candid panel sessions where award recipients share their journeys, challenges, lessons, and wisdom to uplift others.",
-    //   features: [
-    //     "Real journeys—not scripted speeches",
-    //     "Lessons on resilience and identity",
-    //     "Space for dialogue and reflection",
-    //     "Role models who are relatable",
-    //   ],
-    //   popular: false,
-    // },
-    // {
-    //   title: "Community Impact",
-    //   duration: "For girls who doubt their worth",
-    //   age: "For women who feel unseen",
-    //   price: "Changing how women see themselves",
-    //   description:
-    //     "A platform created to dismantle the belief that quiet stories are not important enough, replacing doubt with recognition.",
-    //   features: [
-    //     "Visibility that sparks confidence",
-    //     "Representation for girls and women",
-    //     "Community belief over hype",
-    //     "Resilience celebrated as success",
-    //   ],
-    //   popular: false,
-    // },
     {
       title: "Podcast Initiative (Upcoming)",
       duration: "Launching soon",
@@ -72,6 +44,22 @@ export default function ProgramsHighlight() {
       popular: false,
     },
   ];
+
+  const [featuredPrograms, setFeaturedPrograms] = useState<any[]>(defaultPrograms);
+
+  useEffect(() => {
+    async function fetchFeaturedPrograms() {
+      try {
+        const data = await client.fetch(programsQuery);
+        if (data && data.length > 0) {
+          setFeaturedPrograms(data);
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for featured programs, using static fallback:", err);
+      }
+    }
+    fetchFeaturedPrograms();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

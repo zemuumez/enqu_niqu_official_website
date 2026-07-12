@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Github, Linkedin, Mail, Award, BookOpen, Users } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
+import { client } from "@/lib/sanity/sanity.client";
+import { foundersQuery } from "@/lib/sanity/sanity.queries";
+import { urlFor } from "@/lib/sanity/sanity.image";
 
 export default function personsContent() {
   const { t } = useLanguage();
@@ -113,6 +116,22 @@ export default function personsContent() {
     },
   ];
 
+  const [persons, setPersons] = useState<any[]>(allPersons);
+
+  useEffect(() => {
+    async function fetchFounders() {
+      try {
+        const data = await client.fetch(foundersQuery);
+        if (data && data.length > 0) {
+          setPersons(data);
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for founders, using static fallback:", err);
+      }
+    }
+    fetchFounders();
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -195,12 +214,16 @@ export default function personsContent() {
 
         {/* persons Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {allPersons.map((person, index) => (
+          {persons.map((person, index) => (
             <div key={index} className="institutional-card group fade-in-up">
               <div className="text-center mb-6">
                 <div className="relative mb-4">
                   <img
-                    src={person.image || "/placeholder.svg"}
+                    src={
+                      person.image && typeof person.image === "object"
+                        ? urlFor(person.image).url()
+                        : (person.image || "/placeholder.svg")
+                    }
                     alt={person.nameKey ? t(person.nameKey) : person.name}
                     className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-primary/20 group-hover:border-primary/50 transition-colors"
                   />

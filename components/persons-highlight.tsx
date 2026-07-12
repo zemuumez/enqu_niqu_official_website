@@ -5,13 +5,16 @@ import Image from "next/image";
 import { ArrowRight, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 import Link from "next/link";
+import { client } from "@/lib/sanity/sanity.client";
+import { foundersQuery } from "@/lib/sanity/sanity.queries";
+import { urlFor } from "@/lib/sanity/sanity.image";
 
 export default function PersonsHighlight() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const featuredPersons = [
+  const defaultPersons = [
     {
       nameKey: "person.weynshet_name",
       titleKey: "person.weynshet_title",
@@ -34,6 +37,22 @@ export default function PersonsHighlight() {
       specialties: ["Community Care", "Dialogue Design", "Representation"],
     },
   ];
+
+  const [featuredPersons, setFeaturedPersons] = useState<any[]>(defaultPersons);
+
+  useEffect(() => {
+    async function fetchFeaturedFounders() {
+      try {
+        const data = await client.fetch(foundersQuery);
+        if (data && data.length > 0) {
+          setFeaturedPersons(data.slice(0, 3));
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for featured founders, using static fallback:", err);
+      }
+    }
+    fetchFeaturedFounders();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -118,8 +137,12 @@ export default function PersonsHighlight() {
                   }}
                 >
                   <Image
-                    src={person.image || "/placeholder.svg"}
-                    alt={t(person.nameKey)}
+                    src={
+                      person.image && typeof person.image === "object"
+                        ? urlFor(person.image).url()
+                        : (person.image || "/placeholder.svg")
+                    }
+                    alt={person.nameKey ? t(person.nameKey) : person.name}
                     fill
                     className="rounded-full object-cover border-4 border-primary/20 group-hover:border-primary/50 transition-colors"
                   />
@@ -128,10 +151,10 @@ export default function PersonsHighlight() {
               </div>
 
               <h3 className="text-xl font-medium mb-2 text-text-primary">
-                {t(person.nameKey)}
+                {person.nameKey ? t(person.nameKey) : person.name}
               </h3>
               <p className="text-accent font-medium mb-3">
-                {t(person.titleKey)}
+                {person.titleKey ? t(person.titleKey) : person.title}
               </p>
               <p className="text-text-secondary text-sm mb-4">{person.bio}</p>
 

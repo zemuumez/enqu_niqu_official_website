@@ -13,8 +13,12 @@ import PatternDevider from "@/components/pattern-divider";
 import { LanguageProvider } from "@/contexts/language-context";
 import fs from "fs";
 import path from "path";
+import { client } from "@/lib/sanity/sanity.client";
+import { gallerySessionsQuery } from "@/lib/sanity/sanity.queries";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
   // Read images from public folders (server-side)
   const sessionLastDir = path.join(
     process.cwd(),
@@ -40,11 +44,28 @@ export default function Home() {
     }
   };
 
-  const sessionNowImages = readPublicImages(sessionNowDir, "/images/Session8");
-  const sessionLastImages = readPublicImages(
-    sessionLastDir,
-    "/images/Session7"
-  );
+  let sessionNowImages: string[] = [];
+  let sessionLastImages: string[] = [];
+
+  try {
+    const sanityData = await client.fetch(gallerySessionsQuery);
+    if (sanityData && sanityData.length > 0) {
+      const session8 = sanityData.find((s: any) => s.session === 8);
+      const session7 = sanityData.find((s: any) => s.session === 7);
+      if (session8) sessionNowImages = session8.images || [];
+      if (session7) sessionLastImages = session7.images || [];
+    }
+  } catch (err) {
+    console.error("Sanity query error on Home page film reel, using local:", err);
+  }
+
+  if (sessionNowImages.length === 0) {
+    sessionNowImages = readPublicImages(sessionNowDir, "/images/Session8");
+  }
+  if (sessionLastImages.length === 0) {
+    sessionLastImages = readPublicImages(sessionLastDir, "/images/Session7");
+  }
+
 
   return (
     <LanguageProvider>
