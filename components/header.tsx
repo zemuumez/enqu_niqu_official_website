@@ -15,7 +15,7 @@ const navItems = [
   { key: "nav.persons", href: "/founders", isAnchor: false },
   { key: "nav.programs", href: "/programs", isAnchor: false },
   { key: "nav.gallery", href: "/gallery", isAnchor: false },
-  { key: "nav.contact", href: "/contact", isAnchor: false },
+  // { key: "nav.contact", href: "/contact", isAnchor: false },
 ];
 
 export default function Header() {
