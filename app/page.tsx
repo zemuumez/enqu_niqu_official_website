@@ -46,10 +46,12 @@ export default async function Home() {
 
   let sessionNowImages: string[] = [];
   let sessionLastImages: string[] = [];
+  let allSessions: any[] = [];
 
   try {
     const sanityData = await client.fetch(gallerySessionsQuery);
     if (sanityData && sanityData.length > 0) {
+      allSessions = sanityData;
       const session8 = sanityData.find((s: any) => s.session === 8);
       const session7 = sanityData.find((s: any) => s.session === 7);
       if (session8) sessionNowImages = session8.images || [];
@@ -82,7 +84,7 @@ export default async function Home() {
         <AboutSection />
         <ProgramsHighlight />
         <PersonsHighlight />
-        <GalleryHighlight />
+        <GalleryHighlight sessions={allSessions} />
         <ContactHighlight />
         <Footer />
       </main>

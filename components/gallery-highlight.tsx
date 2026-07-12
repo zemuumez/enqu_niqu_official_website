@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Camera } from "lucide-react";
 import Link from "next/link";
 
-export default function GalleryHighlight() {
+interface GalleryHighlightProps {
+  sessions?: any[];
+}
+
+export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const featuredImages = [
+  const [featuredImages, setFeaturedImages] = useState([
     {
       src: "/images/Session1/2025-12-14 02.54.48.jpg",
       alt: "Women honored on stage",
@@ -29,7 +33,58 @@ export default function GalleryHighlight() {
       alt: "Woman sharing her journey",
       title: "Woman sharing her journey",
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    if (sessions && sessions.length > 0) {
+      // Extract the first image from each of the latest 4 sessions dynamically
+      const sorted = [...sessions].sort((a, b) => b.session - a.session);
+      const dynamicFeatured = [];
+
+      for (let i = 0; i < Math.min(4, sorted.length); i++) {
+        const session = sorted[i];
+        if (session.images && session.images.length > 0) {
+          dynamicFeatured.push({
+            src: session.images[0],
+            alt: session.title || `Session ${session.session} photo`,
+            title: session.title || `Session ${session.session} Gathering`,
+          });
+        }
+      }
+
+      // If we got fewer than 4 images from Sanity, fill in the rest from our fallback list
+      if (dynamicFeatured.length > 0) {
+        const updated = [...dynamicFeatured];
+        const fallbacks = [
+          {
+            src: "/images/Session1/2025-12-14 02.54.48.jpg",
+            alt: "Women honored on stage",
+            title: "Women honored on stage",
+          },
+          {
+            src: "/images/Session2/2025-12-14 02.57.00.jpg",
+            alt: "Panel conversation",
+            title: "Storytelling Panel",
+          },
+          {
+            src: "/images/Session3/2025-12-14 03.02.07.jpg",
+            alt: "Community celebrating honorees",
+            title: "Community Celebration",
+          },
+          {
+            src: "/images/Session4/2026-01-01 11.26.12.jpg",
+            alt: "Woman sharing her journey",
+            title: "Woman sharing her journey",
+          },
+        ];
+        
+        while (updated.length < 4 && updated.length < fallbacks.length) {
+          updated.push(fallbacks[updated.length]);
+        }
+        setFeaturedImages(updated);
+      }
+    }
+  }, [sessions]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

@@ -17,6 +17,60 @@ export default function ContactContent() {
   const sectionRef = useRef<HTMLElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    collaborationType: "",
+    subject: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    const fieldName = id === "program" ? "collaborationType" : id;
+    setFormData((prev) => ({ ...prev, [fieldName]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      setStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        collaborationType: "",
+        subject: "",
+        message: "",
+      });
+    } catch (err: any) {
+      console.error(err);
+      setStatus("error");
+      setErrorMessage(err.message || "Failed to send message. Please try again.");
+    }
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -167,7 +221,22 @@ export default function ContactContent() {
               <h3 className="text-2xl font-bold mb-6 text-text-primary">
                 Send Us a Message
               </h3>
-              <form className="space-y-6">
+              
+              {status === "success" && (
+                <div className="mb-6 p-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg">
+                  <h4 className="font-semibold text-lg mb-1">Message Sent Successfully!</h4>
+                  <p className="text-sm">Thank you for reaching out. We appreciate you taking the time to write to us, and we will get back to you shortly.</p>
+                </div>
+              )}
+
+              {status === "error" && (
+                <div className="mb-6 p-6 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg">
+                  <h4 className="font-semibold text-lg mb-1">Submission Failed</h4>
+                  <p className="text-sm">{errorMessage}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -180,7 +249,10 @@ export default function ContactContent() {
                       type="text"
                       id="firstName"
                       required
-                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      disabled={status === "submitting"}
+                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                       placeholder="John"
                     />
                   </div>
@@ -195,7 +267,10 @@ export default function ContactContent() {
                       type="text"
                       id="lastName"
                       required
-                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      disabled={status === "submitting"}
+                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                       placeholder="Doe"
                     />
                   </div>
@@ -213,7 +288,10 @@ export default function ContactContent() {
                       type="email"
                       id="email"
                       required
-                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      value={formData.email}
+                      onChange={handleChange}
+                      disabled={status === "submitting"}
+                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                       placeholder="john.doe@example.com"
                     />
                   </div>
@@ -227,7 +305,10 @@ export default function ContactContent() {
                     <input
                       type="tel"
                       id="phone"
-                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      disabled={status === "submitting"}
+                      className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                       placeholder="+251 911 123 456"
                     />
                   </div>
@@ -242,7 +323,10 @@ export default function ContactContent() {
                   </label>
                   <select
                     id="program"
-                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    value={formData.collaborationType}
+                    onChange={handleChange}
+                    disabled={status === "submitting"}
+                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                   >
                     <option value="">Select an option</option>
                     {/* <option value="nomination">Nomination submission</option> */}
@@ -267,7 +351,10 @@ export default function ContactContent() {
                   <select
                     id="subject"
                     required
-                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    disabled={status === "submitting"}
+                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50"
                   >
                     <option value="">Select a subject</option>
                     {/* <option value="nomination">Nomination</option> */}
@@ -292,7 +379,10 @@ export default function ContactContent() {
                     id="message"
                     rows={6}
                     required
-                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"
+                    value={formData.message}
+                    onChange={handleChange}
+                    disabled={status === "submitting"}
+                    className="w-full p-4 rounded-lg border border-border bg-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none disabled:opacity-50"
                     placeholder="Share the story, collaboration idea, or support you have in mind..."
                   ></textarea>
                 </div>
@@ -301,7 +391,8 @@ export default function ContactContent() {
                   <input
                     type="checkbox"
                     id="newsletter"
-                    className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary"
+                    disabled={status === "submitting"}
+                    className="mt-1 w-4 h-4 text-primary border-border rounded focus:ring-primary disabled:opacity-50"
                   />
                   <label
                     htmlFor="newsletter"
@@ -314,10 +405,13 @@ export default function ContactContent() {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full py-4 text-lg flex items-center justify-center space-x-2 shadow"
+                  disabled={status === "submitting"}
+                  className="btn-primary w-full py-4 text-lg flex items-center justify-center space-x-2 shadow disabled:opacity-50"
                 >
                   <Send className="w-5 h-5" />
-                  <span>{t("contact.send_message")}</span>
+                  <span>
+                    {status === "submitting" ? "Sending..." : t("contact.send_message")}
+                  </span>
                 </button>
               </form>
             </div>
