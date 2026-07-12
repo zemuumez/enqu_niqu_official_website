@@ -26,7 +26,30 @@ export const metadata: Metadata = {
   title: "ዕንቁ ሴት ንቁ ሴት | ENQU SET NIQU SET – Awakening the Gems Within Women",
   description:
     "Award-driven empowerment platform recognizing, amplifying, and celebrating resilient women whose stories deserve the spotlight.",
-    generator: 'v0.app'
+  generator: 'v0.app',
+  metadataBase: new URL("https://enqusetniquset.com"),
+  openGraph: {
+    title: "ዕንቁ ሴት ንቁ ሴት | ENQU SET NIQU SET",
+    description: "Award-driven empowerment platform celebrating resilient women whose stories deserve the spotlight.",
+    url: "https://enqusetniquset.com",
+    siteName: "ENQU SET NIQU SET",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/images/EnquNiquLogo.png",
+        width: 800,
+        height: 600,
+        alt: "ENQU SET NIQU SET Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ዕንቁ ሴት ንቁ ሴት | ENQU SET NIQU SET",
+    description: "Award-driven empowerment platform celebrating resilient women whose stories deserve the spotlight.",
+    images: ["/images/EnquNiquLogo.png"],
+  },
 }
 
 export default function RootLayout({

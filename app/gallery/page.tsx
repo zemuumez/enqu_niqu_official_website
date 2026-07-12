@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { LanguageProvider } from "@/contexts/language-context";
 import Header from "@/components/header";
 import GalleryContent from "@/components/gallery-content";
@@ -6,6 +7,11 @@ import { client } from "@/lib/sanity/sanity.client";
 import { gallerySessionsQuery } from "@/lib/sanity/sanity.queries";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Gathering Gallery & Archive | ENQU SET NIQU SET",
+  description: "Explore photos and moments from our bi-annual gatherings, storytelling circles, and award evenings honoring resilient women.",
+};
 
 export default async function GalleryPage() {
   // Try to load images from Sanity CMS
