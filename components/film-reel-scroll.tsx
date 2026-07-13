@@ -315,10 +315,10 @@ export default function FilmReelScroll({
   // Use modulo to create seamless loop - when we reach one set width, loop back
   // This ensures the tail connects seamlessly to the head
   const leftReelTransform =
-    rightSetWidth > 0 ? rightBaseOffset + (scrollDistance % rightSetWidth) : 0;
+    leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
 
   const rightReelTransform =
-    leftSetWidth > 0 ? -(scrollDistance % leftSetWidth) : 0;
+    rightSetWidth > 0 ? rightBaseOffset + (scrollDistance % rightSetWidth) : 0;
 
   return (
     <section
