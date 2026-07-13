@@ -1,16 +1,27 @@
 import { createClient } from "@sanity/client";
 import { NextResponse } from "next/server";
 
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-  apiVersion: "2024-03-11",
-  token: process.env.SANITY_WRITE_TOKEN,
-  useCdn: false,
-});
-
 export async function POST(req: Request) {
   try {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    const token = process.env.SANITY_WRITE_TOKEN;
+
+    if (!projectId || !token) {
+      console.error("Sanity configuration missing: NEXT_PUBLIC_SANITY_PROJECT_ID or SANITY_WRITE_TOKEN not set.");
+      return NextResponse.json(
+        { error: "Server configuration error. Credentials missing." },
+        { status: 500 }
+      );
+    }
+
+    const client = createClient({
+      projectId,
+      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+      apiVersion: "2024-03-11",
+      token,
+      useCdn: false,
+    });
+
     const body = await req.json();
     const { firstName, lastName, email, phone, collaborationType, subject, message } = body;
 
