@@ -73,7 +73,7 @@ const translations = {
     "contact.send_message": "Send Message",
     "contact.address_label": "Our Location",
     "contact.address": "Addis Ababa, Ethiopia",
-    "contact.phone": "+251 935 167 575",
+    "contact.phone": "+251 913 528 574",
     "contact.email": "hello@enqusetniquset.com",
 
     // Bootcamp Page
@@ -159,7 +159,7 @@ const translations = {
     "contact.send_message": "Send Message",
     "contact.address_label": "Our Location",
     "contact.address": "Addis Ababa, Ethiopia",
-    "contact.phone": "+251 911 000 000",
+    "contact.phone": "+251 913 528 574",
     "contact.email": "hello@enkuniqu.com",
 
     // Bootcamp Page
