@@ -14,7 +14,7 @@ import { LanguageProvider } from "@/contexts/language-context";
 import fs from "fs";
 import path from "path";
 import { client } from "@/lib/sanity/sanity.client";
-import { gallerySessionsQuery } from "@/lib/sanity/sanity.queries";
+import { gallerySessionsQuery, siteSettingsQuery } from "@/lib/sanity/sanity.queries";
 
 export const dynamic = "force-dynamic";
 
@@ -69,8 +69,15 @@ export default async function Home() {
   }
 
 
+  let siteSettings: any = null;
+  try {
+    siteSettings = await client.fetch(siteSettingsQuery);
+  } catch (err) {
+    console.error("Sanity site settings query error:", err);
+  }
+
   return (
-    <LanguageProvider>
+    <LanguageProvider initialSettings={siteSettings}>
       <main className="min-h-screen">
         <Header />
         <HeroSection />

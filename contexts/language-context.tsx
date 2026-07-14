@@ -160,7 +160,7 @@ const translations = {
     "contact.address_label": "Our Location",
     "contact.address": "Addis Ababa, Ethiopia",
     "contact.phone": "+251 913 528 574",
-    "contact.email": "hello@enkuniqu.com",
+    "contact.email": "hello@enqusetniquset.com",
 
     // Bootcamp Page
     "bootcamp.title": "Inside ዕንቁ ሴት ንቁ ሴት",
@@ -190,10 +190,61 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+export function LanguageProvider({ 
+  children,
+  initialSettings
+}: { 
+  children: ReactNode;
+  initialSettings?: any;
+}) {
   const [language, setLanguage] = useState<Language>("en");
 
   const t = (key: string): string => {
+    if (initialSettings) {
+      // Dynamic CRM contact settings override
+      if (key === "contact.phone" && initialSettings.phone) return initialSettings.phone;
+      if (key === "contact.email" && initialSettings.email) return initialSettings.email;
+      if (key === "contact.address" && initialSettings.address) return initialSettings.address;
+
+      // Dynamic Page Content settings overrides (localized)
+      if (key === "hero.title") {
+        const val = language === "en" ? initialSettings.heroTitleEn : initialSettings.heroTitleAm;
+        if (val) return val;
+      }
+      if (key === "hero.subtitle") {
+        const val = language === "en" ? initialSettings.heroSubtitleEn : initialSettings.heroSubtitleAm;
+        if (val) return val;
+      }
+      if (key === "about.title") {
+        const val = language === "en" ? initialSettings.aboutTitleEn : initialSettings.aboutTitleAm;
+        if (val) return val;
+      }
+      if (key === "about.description") {
+        const val = language === "en" ? initialSettings.aboutDescriptionEn : initialSettings.aboutDescriptionAm;
+        if (val) return val;
+      }
+      if (key === "about.graduates_worked") {
+        const val = language === "en" ? initialSettings.aboutGraduatesWorkedEn : initialSettings.aboutGraduatesWorkedAm;
+        if (val) return val;
+      }
+      if (key === "bootcamp.title") {
+        const val = language === "en" ? initialSettings.bootcampTitleEn : initialSettings.bootcampTitleAm;
+        if (val) return val;
+      }
+      if (key === "bootcamp.subtitle") {
+        const val = language === "en" ? initialSettings.bootcampSubtitleEn : initialSettings.bootcampSubtitleAm;
+        if (val) return val;
+      }
+      if (key === "bootcamp.description_1") {
+        const val = language === "en" ? initialSettings.bootcampDescription1En : initialSettings.bootcampDescription1Am;
+        if (val) return val;
+      }
+      if (key === "bootcamp.description_2") {
+        const val = language === "en" ? initialSettings.bootcampDescription2En : initialSettings.bootcampDescription2Am;
+        if (val) return val;
+      }
+    }
+
     return (
       translations[language][key as keyof (typeof translations)["en"]] || key
     );

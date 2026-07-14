@@ -3,15 +3,24 @@ import Header from "@/components/header"
 import ContactContent from "@/components/contact-content"
 import Footer from "@/components/footer"
 import { LanguageProvider } from "@/contexts/language-context"
+import { client } from "@/lib/sanity/sanity.client";
+import { siteSettingsQuery } from "@/lib/sanity/sanity.queries";
 
 export const metadata: Metadata = {
   title: "Contact & Nominate | ENQU SET NIQU SET",
   description: "Get in touch to nominate a resilient woman, explore sponsorship opportunities, host storytelling circles, or join our community rhythm.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  let siteSettings: any = null;
+  try {
+    siteSettings = await client.fetch(siteSettingsQuery);
+  } catch (err) {
+    console.error("Sanity site settings query error:", err);
+  }
+
   return (
-    <LanguageProvider>
+    <LanguageProvider initialSettings={siteSettings}>
       <main className="min-h-screen">
         <Header />
         <div className="pt-20">

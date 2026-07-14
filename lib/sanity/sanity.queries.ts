@@ -40,3 +40,30 @@ export const gallerySessionsQuery = groq`
     "images": images[].asset->url
   }
 `;
+
+// Query to get global site settings and text copy translations
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0] {
+    email,
+    phone,
+    address,
+    heroTitleEn,
+    heroTitleAm,
+    heroSubtitleEn,
+    heroSubtitleAm,
+    aboutTitleEn,
+    aboutTitleAm,
+    aboutDescriptionEn,
+    aboutDescriptionAm,
+    aboutGraduatesWorkedEn,
+    aboutGraduatesWorkedAm,
+    bootcampTitleEn,
+    bootcampTitleAm,
+    bootcampSubtitleEn,
+    bootcampSubtitleAm,
+    bootcampDescription1En,
+    bootcampDescription1Am,
+    bootcampDescription2En,
+    bootcampDescription2Am
+  }
+`;

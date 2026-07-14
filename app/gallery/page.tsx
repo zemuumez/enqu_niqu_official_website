@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import GalleryContent from "@/components/gallery-content";
 import { getSessionImages, getAvailableSessions } from "@/lib/gallery-utils";
 import { client } from "@/lib/sanity/sanity.client";
-import { gallerySessionsQuery } from "@/lib/sanity/sanity.queries";
+import { gallerySessionsQuery, siteSettingsQuery } from "@/lib/sanity/sanity.queries";
 
 export const dynamic = "force-dynamic";
 
@@ -16,9 +16,14 @@ export const metadata: Metadata = {
 export default async function GalleryPage() {
   // Try to load images from Sanity CMS
   let sessionsData: { session: number; images: string[] }[] = [];
+  let siteSettings: any = null;
 
   try {
-    const sanityData = await client.fetch(gallerySessionsQuery);
+    const [sanityData, settingsData] = await Promise.all([
+      client.fetch(gallerySessionsQuery),
+      client.fetch(siteSettingsQuery),
+    ]);
+    siteSettings = settingsData;
     if (sanityData && sanityData.length > 0) {
       sessionsData = sanityData.map((s: any) => ({
         session: s.session,
@@ -26,7 +31,7 @@ export default async function GalleryPage() {
       }));
     }
   } catch (err) {
-    console.error("Sanity gallery fetch error, using local fallback:", err);
+    console.error("Sanity gallery/settings fetch error, using local fallback:", err);
   }
 
   // Fallback to static folders if Sanity is empty/configured incorrectly
@@ -39,7 +44,7 @@ export default async function GalleryPage() {
   }
 
   return (
-    <LanguageProvider>
+    <LanguageProvider initialSettings={siteSettings}>
       <div className="min-h-screen bg-background">
         <Header />
         <main>
