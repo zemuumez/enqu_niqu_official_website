@@ -10,9 +10,36 @@ interface GalleryHighlightProps {
 }
 
 export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
-  const { t } = useLanguage();
+  const { t, settings, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const defaultStats = [
+    { value: "9", label: "Events captured", labelAm: "የተሰነዱ ፕሮግራሞች" },
+    { value: "30+", label: "Honorees celebrated", labelAm: "የተከበሩ ተሸላሚዎች" },
+    { value: "25+", label: "Dialogue sessions", labelAm: "የውይይት መድረኮች" },
+    { value: "Podcast", label: "Stories soon on air", labelAm: "ታሪኮች በቅርቡ በአየር ላይ" },
+  ];
+
+  const galleryStats =
+    settings?.galleryStats && settings.galleryStats.length > 0
+      ? settings.galleryStats
+      : defaultStats;
+
+  const ctaTitle =
+    (language === "am" && settings?.galleryCtaTitleAm) ||
+    settings?.galleryCtaTitleEn ||
+    "Explore Our Story Archive";
+
+  const ctaSubtitle =
+    (language === "am" && settings?.galleryCtaSubtitleAm) ||
+    settings?.galleryCtaSubtitleEn ||
+    "Discover moments from award nights, storytelling circles, and the community that believes recognition is a catalyst.";
+
+  const ctaButton =
+    (language === "am" && settings?.galleryCtaButtonAm) ||
+    settings?.galleryCtaButtonEn ||
+    "View Full Gallery";
 
   const [featuredImages, setFeaturedImages] = useState([
     {
@@ -184,26 +211,14 @@ export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">8</div>
-            <div className="text-text-secondary text-sm">Events captured</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">30+</div>
-            <div className="text-text-secondary text-sm">
-              Honorees celebrated
+          {galleryStats.map((stat: any, idx: number) => (
+            <div key={idx} className="text-center">
+              <div className="text-3xl md:text-4xl font-light mb-2">{stat.value}</div>
+              <div className="text-text-secondary text-sm">
+                {(language === "am" && stat.labelAm) || stat.label}
+              </div>
             </div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">25+</div>
-            <div className="text-text-secondary text-sm">Dialogue sessions</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">Podcast</div>
-            <div className="text-text-secondary text-sm">
-              Stories soon on air
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* CTA Section */}
@@ -214,18 +229,17 @@ export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
         >
           <div className="max-w-2xl mx-auto space-y-8">
             <h3 className="text-2xl md:text-3xl font-light">
-              Explore Our Story Archive
+              {ctaTitle}
             </h3>
             <p className="text-text-secondary">
-              Discover moments from award nights, storytelling circles, and the
-              community that believes recognition is a catalyst.
+              {ctaSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/gallery"
                 className="btn-modern magnetic inline-flex items-center"
               >
-                <span>View Full Gallery</span>
+                <span>{ctaButton}</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </div>

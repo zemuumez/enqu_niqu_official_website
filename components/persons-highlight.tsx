@@ -10,9 +10,36 @@ import { foundersQuery } from "@/lib/sanity/sanity.queries";
 import { urlFor } from "@/lib/sanity/sanity.image";
 
 export default function PersonsHighlight() {
-  const { t } = useLanguage();
+  const { t, settings, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const defaultStats = [
+    { value: "9", label: "Empowerment gatherings", labelAm: "የእውቅና ፕሮግራሞች" },
+    { value: "5+", label: "Founders and close collaborators", labelAm: "መስራቾች እና የቅርብ ተባባሪዎች" },
+    { value: "100+", label: "Stories ready to be amplified", labelAm: "ሊደመጡ የተዘጋጁ ታሪኮች" },
+    { value: "1", label: "Podcast on the horizon", labelAm: "ፖድካስት በቅርቡ" },
+  ];
+
+  const foundersStats =
+    settings?.foundersStats && settings.foundersStats.length > 0
+      ? settings.foundersStats
+      : defaultStats;
+
+  const ctaTitle =
+    (language === "am" && settings?.foundersCtaTitleAm) ||
+    settings?.foundersCtaTitleEn ||
+    "Meet the People Behind ENQU SET NIQU SET";
+
+  const ctaSubtitle =
+    (language === "am" && settings?.foundersCtaSubtitleAm) ||
+    settings?.foundersCtaSubtitleEn ||
+    "Learn about the founders and the women whose stories shape every gathering, panel, and initiative we host.";
+
+  const ctaButton =
+    (language === "am" && settings?.foundersCtaButtonAm) ||
+    settings?.foundersCtaButtonEn ||
+    "Meet Our People";
 
   const defaultPersons = [
     {
@@ -178,30 +205,14 @@ export default function PersonsHighlight() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">8</div>
-            <div className="text-text-secondary text-sm">
-              Empowerment gatherings
+          {foundersStats.map((stat: any, idx: number) => (
+            <div key={idx} className="text-center">
+              <div className="text-3xl md:text-4xl font-light mb-2">{stat.value}</div>
+              <div className="text-text-secondary text-sm">
+                {(language === "am" && stat.labelAm) || stat.label}
+              </div>
             </div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">5+</div>
-            <div className="text-text-secondary text-sm">
-              Founders and close collaborators
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">100+</div>
-            <div className="text-text-secondary text-sm">
-              Stories ready to be amplified
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-light mb-2">1</div>
-            <div className="text-text-secondary text-sm">
-              Podcast on the horizon
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* CTA Section */}
@@ -212,18 +223,17 @@ export default function PersonsHighlight() {
         >
           <div className="max-w-2xl mx-auto space-y-8">
             <h3 className="text-2xl md:text-3xl font-light">
-              Meet the People Behind ENQU SET NIQU SET
+              {ctaTitle}
             </h3>
             <p className="text-text-secondary">
-              Learn about the founders and the women whose stories shape every
-              gathering, panel, and initiative we host.
+              {ctaSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/founders"
                 className="btn-modern magnetic inline-flex items-center"
               >
-                <span>Meet Our People</span>
+                <span>{ctaButton}</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </div>

@@ -8,9 +8,24 @@ import { client } from "@/lib/sanity/sanity.client";
 import { programsQuery } from "@/lib/sanity/sanity.queries";
 
 export default function ProgramsHighlight() {
-  const { t } = useLanguage();
+  const { t, settings, language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const ctaTitle =
+    (language === "am" && settings?.programsCtaTitleAm) ||
+    settings?.programsCtaTitleEn ||
+    "Be Part of the Awakening";
+
+  const ctaSubtitle =
+    (language === "am" && settings?.programsCtaSubtitleAm) ||
+    settings?.programsCtaSubtitleEn ||
+    "Nominate a resilient woman, host a conversation, or partner to amplify the next wave of awakened gems.";
+
+  const ctaButton =
+    (language === "am" && settings?.programsCtaButtonAm) ||
+    settings?.programsCtaButtonEn ||
+    "See All Initiatives";
 
   const defaultPrograms = [
     {
@@ -200,18 +215,17 @@ export default function ProgramsHighlight() {
         >
           <div className="max-w-2xl mx-auto space-y-8">
             <h3 className="text-2xl md:text-3xl font-light">
-              Be Part of the Awakening
+              {ctaTitle}
             </h3>
             <p className="text-text-secondary">
-              Nominate a resilient woman, host a conversation, or partner to
-              amplify the next wave of awakened gems.
+              {ctaSubtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/programs"
                 className="btn-modern magnetic inline-flex items-center"
               >
-                <span>See All Initiatives</span>
+                <span>{ctaButton}</span>
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </div>

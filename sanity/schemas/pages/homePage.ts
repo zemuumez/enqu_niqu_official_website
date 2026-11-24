@@ -285,6 +285,47 @@ export const homePage = defineType({
       rows: 3,
       group: "programsHighlight",
     }),
+    defineField({
+      name: "programsCtaTitleEn",
+      title: "Bottom CTA Title (English)",
+      type: "string",
+      group: "programsHighlight",
+      initialValue: "Be Part of the Awakening",
+    }),
+    defineField({
+      name: "programsCtaTitleAm",
+      title: "Bottom CTA Title (Amharic)",
+      type: "string",
+      group: "programsHighlight",
+    }),
+    defineField({
+      name: "programsCtaSubtitleEn",
+      title: "Bottom CTA Subtitle (English)",
+      type: "text",
+      rows: 2,
+      group: "programsHighlight",
+      initialValue: "Nominate a resilient woman, host a conversation, or partner to amplify the next wave of awakened gems.",
+    }),
+    defineField({
+      name: "programsCtaSubtitleAm",
+      title: "Bottom CTA Subtitle (Amharic)",
+      type: "text",
+      rows: 2,
+      group: "programsHighlight",
+    }),
+    defineField({
+      name: "programsCtaButtonEn",
+      title: "Bottom CTA Button Text (English)",
+      type: "string",
+      group: "programsHighlight",
+      initialValue: "See All Initiatives",
+    }),
+    defineField({
+      name: "programsCtaButtonAm",
+      title: "Bottom CTA Button Text (Amharic)",
+      type: "string",
+      group: "programsHighlight",
+    }),
 
     // ── SECTION 5: FOUNDERS HIGHLIGHT ────────────────────────────────
     defineField({
@@ -327,6 +368,67 @@ export const homePage = defineType({
       rows: 3,
       group: "foundersHighlight",
     }),
+    defineField({
+      name: "foundersStats",
+      title: "Founders Section Stat Counters",
+      type: "array",
+      group: "foundersHighlight",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "value", title: "Value / Number (e.g. 9, 5+, 100+, 1)", type: "string" }),
+            defineField({ name: "label", title: "Label (English)", type: "string" }),
+            defineField({ name: "labelAm", title: "Label (Amharic)", type: "string" }),
+          ],
+          preview: {
+            select: { title: "value", subtitle: "label" },
+          },
+        },
+      ],
+      description: "4 editable stat counters displayed below the founders avatars",
+    }),
+    defineField({
+      name: "foundersCtaTitleEn",
+      title: "Bottom CTA Title (English)",
+      type: "string",
+      group: "foundersHighlight",
+      initialValue: "Meet the People Behind ENQU SET NIQU SET",
+    }),
+    defineField({
+      name: "foundersCtaTitleAm",
+      title: "Bottom CTA Title (Amharic)",
+      type: "string",
+      group: "foundersHighlight",
+    }),
+    defineField({
+      name: "foundersCtaSubtitleEn",
+      title: "Bottom CTA Subtitle (English)",
+      type: "text",
+      rows: 2,
+      group: "foundersHighlight",
+      initialValue: "Learn about the founders and the women whose stories shape every gathering, panel, and initiative we host.",
+    }),
+    defineField({
+      name: "foundersCtaSubtitleAm",
+      title: "Bottom CTA Subtitle (Amharic)",
+      type: "text",
+      rows: 2,
+      group: "foundersHighlight",
+    }),
+    defineField({
+      name: "foundersCtaButtonEn",
+      title: "Bottom CTA Button Text (English)",
+      type: "string",
+      group: "foundersHighlight",
+      initialValue: "Meet Our People",
+    }),
+    defineField({
+      name: "foundersCtaButtonAm",
+      title: "Bottom CTA Button Text (Amharic)",
+      type: "string",
+      group: "foundersHighlight",
+    }),
 
     // ── SECTION 6: GALLERY HIGHLIGHT ─────────────────────────────────
     defineField({
@@ -367,6 +469,67 @@ export const homePage = defineType({
       title: "Section Subtitle (Amharic)",
       type: "text",
       rows: 3,
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryStats",
+      title: "Gallery Section Stat Counters",
+      type: "array",
+      group: "galleryHighlight",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "value", title: "Value / Number (e.g. 9, 30+, 25+, Podcast)", type: "string" }),
+            defineField({ name: "label", title: "Label (English)", type: "string" }),
+            defineField({ name: "labelAm", title: "Label (Amharic)", type: "string" }),
+          ],
+          preview: {
+            select: { title: "value", subtitle: "label" },
+          },
+        },
+      ],
+      description: "4 editable stat counters displayed below the gallery preview grid",
+    }),
+    defineField({
+      name: "galleryCtaTitleEn",
+      title: "Bottom CTA Title (English)",
+      type: "string",
+      group: "galleryHighlight",
+      initialValue: "Explore Our Story Archive",
+    }),
+    defineField({
+      name: "galleryCtaTitleAm",
+      title: "Bottom CTA Title (Amharic)",
+      type: "string",
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryCtaSubtitleEn",
+      title: "Bottom CTA Subtitle (English)",
+      type: "text",
+      rows: 2,
+      group: "galleryHighlight",
+      initialValue: "Discover moments from award nights, storytelling circles, and the community that believes recognition is a catalyst.",
+    }),
+    defineField({
+      name: "galleryCtaSubtitleAm",
+      title: "Bottom CTA Subtitle (Amharic)",
+      type: "text",
+      rows: 2,
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryCtaButtonEn",
+      title: "Bottom CTA Button Text (English)",
+      type: "string",
+      group: "galleryHighlight",
+      initialValue: "View Full Gallery",
+    }),
+    defineField({
+      name: "galleryCtaButtonAm",
+      title: "Bottom CTA Button Text (Amharic)",
+      type: "string",
       group: "galleryHighlight",
     }),
 
