@@ -6,9 +6,26 @@ import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
 
 export default function HeroSection() {
-  const { t } = useLanguage();
+  const { t, language, settings } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
+
+  const defaultStats = [
+    { value: "8", label: "Empowerment events hosted" },
+    { value: "Aug 29", label: "Next award gathering" },
+    { value: "Podcast", label: "Launching soon" },
+  ];
+
+  const heroStats =
+    settings?.heroStats && settings.heroStats.length > 0
+      ? settings.heroStats.map((item: any) => ({
+          value: item.value || "",
+          label:
+            language === "am" && item.labelAm
+              ? item.labelAm
+              : item.label || "",
+        }))
+      : defaultStats;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,24 +88,14 @@ export default function HeroSection() {
                 : "opacity-0 translate-y-10 pointer-events-none"
             }`}
           >
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-light mb-2">8</div>
-              <div className="text-sm text-text-muted">
-                Empowerment events hosted
+            {heroStats.map((stat, idx) => (
+              <div key={idx} className="text-center">
+                <div className="text-2xl md:text-3xl font-light mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-text-muted">{stat.label}</div>
               </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-light mb-2">Aug 29</div>
-              <div className="text-sm text-text-muted">
-                Next award gathering
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-light mb-2">
-                Podcast
-              </div>
-              <div className="text-sm text-text-muted">Launching soon</div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

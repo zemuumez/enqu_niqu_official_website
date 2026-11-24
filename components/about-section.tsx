@@ -6,9 +6,25 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function AboutSection() {
-  const { t } = useLanguage();
+  const { t, settings } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const defaultStats = [
+    { target: 8, suffix: "", label: "Empowerment events held" },
+    { target: 5, suffix: "+", label: "Founders & collaborators" },
+    { target: 1, suffix: "", label: "Podcast launching" },
+    { target: 100, suffix: "+", label: "Stories ready to be heard" },
+  ];
+
+  const aboutStats =
+    settings?.aboutStats && settings.aboutStats.length > 0
+      ? settings.aboutStats.map((item: any) => ({
+          target: Number(item.value) || 0,
+          suffix: item.suffix || "",
+          label: item.label || "",
+        }))
+      : defaultStats;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -60,18 +76,10 @@ export default function AboutSection() {
 
             <div className="space-y-4">
               <p className="text-text-secondary">
-                ENQU means Gem, the hidden value, strength, and brilliance
-                within women. SET means woman/girl. NIQU means awake, a reminder
-                that resilience grows when women recognize their worth.
-                Together, ENQU SET NIQU SET honors awakened gems: women who have
-                endured, transformed, and risen without recognition.
+                {t("about.mission")}
               </p>
               <p className="text-text-secondary">
-                Mission: to empower girls and women by elevating untold stories,
-                sparking dialogue, and creating spaces where recognition becomes
-                a catalyst for change. Vision: a society that celebrates
-                resilience as much as success so empowered women empower the
-                next generation.
+                {t("about.vision")}
               </p>
             </div>
 
@@ -93,44 +101,21 @@ export default function AboutSection() {
             }`}
           >
             <div className="grid grid-cols-2 gap-8">
-              <div className="text-center lg:text-left">
-                <div className="text-5xl md:text-6xl font-light mb-2">
-                  <CountUp target={8} isVisible={isVisible} />
+              {aboutStats.map((stat, idx) => (
+                <div key={idx} className="text-center lg:text-left">
+                  <div className="text-5xl md:text-6xl font-light mb-2">
+                    <CountUp target={stat.target} isVisible={isVisible} />
+                    {stat.suffix}
+                  </div>
+                  <div className="text-text-secondary">{stat.label}</div>
                 </div>
-                <div className="text-text-secondary">
-                  Empowerment events held
-                </div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-5xl md:text-6xl font-light mb-2">
-                  <CountUp target={5} isVisible={isVisible} />+
-                </div>
-                <div className="text-text-secondary">
-                  Founders & collaborators
-                </div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-5xl md:text-6xl font-light mb-2">
-                  <CountUp target={1} isVisible={isVisible} />
-                </div>
-                <div className="text-text-secondary">Podcast launching</div>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-5xl md:text-6xl font-light mb-2">
-                  <CountUp target={100} isVisible={isVisible} />+
-                </div>
-                <div className="text-text-secondary">
-                  Stories ready to be heard
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="space-y-4">
               <h3 className="text-xl font-medium">Founders&apos; Philosophy</h3>
               <p className="text-text-secondary">
-                {t("about.graduates_worked")}. Recognition restores dignity,
-                storytelling heals, and when women are seen, communities
-                transform.
+                {t("about.philosophy")}
               </p>
             </div>
           </div>

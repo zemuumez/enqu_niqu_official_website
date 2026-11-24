@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import GalleryContent from "@/components/gallery-content";
 import { getSessionImages, getAvailableSessions } from "@/lib/gallery-utils";
 import { client } from "@/lib/sanity/sanity.client";
-import { gallerySessionsQuery, siteSettingsQuery } from "@/lib/sanity/sanity.queries";
+import { gallerySessionsQuery, siteSettingsQuery, galleryPageQuery } from "@/lib/sanity/sanity.queries";
 
 export const dynamic = "force-dynamic";
 
@@ -17,17 +17,20 @@ export default async function GalleryPage() {
   // Try to load images from Sanity CMS
   let sessionsData: { session: number; images: string[] }[] = [];
   let siteSettings: any = null;
+  let pageContent: any = null;
 
   try {
-    const [sanityData, settingsData] = await Promise.all([
+    const [sanityData, settingsData, galleryData] = await Promise.all([
       client.fetch(gallerySessionsQuery),
       client.fetch(siteSettingsQuery),
+      client.fetch(galleryPageQuery),
     ]);
     siteSettings = settingsData;
+    pageContent = galleryData;
     if (sanityData && sanityData.length > 0) {
       sessionsData = sanityData.map((s: any) => ({
         session: s.session,
-        images: s.images || [],
+        images: (s.images || []).filter(Boolean),
       }));
     }
   } catch (err) {
@@ -44,7 +47,7 @@ export default async function GalleryPage() {
   }
 
   return (
-    <LanguageProvider initialSettings={siteSettings}>
+    <LanguageProvider initialSettings={siteSettings} pageContent={pageContent}>
       <div className="min-h-screen bg-background">
         <Header />
         <main>
@@ -54,4 +57,3 @@ export default async function GalleryPage() {
     </LanguageProvider>
   );
 }
-

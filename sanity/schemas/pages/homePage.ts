@@ -1,0 +1,415 @@
+import { defineField, defineType } from "sanity";
+
+export const homePage = defineType({
+  name: "homePage",
+  title: "Home Page",
+  type: "document",
+  groups: [
+    { name: "hero", title: "1. Hero Section" },
+    { name: "filmReel", title: "2. Film Reel Section" },
+    { name: "about", title: "3. About Section" },
+    { name: "programsHighlight", title: "4. Initiatives Highlight" },
+    { name: "foundersHighlight", title: "5. Founders Highlight" },
+    { name: "galleryHighlight", title: "6. Gallery Highlight" },
+    { name: "contactHighlight", title: "7. Contact Highlight" },
+  ],
+  fields: [
+    defineField({
+      name: "title",
+      title: "Document Title",
+      type: "string",
+      initialValue: "Home Page Content",
+      readOnly: true,
+      description: "Internal reference for this page",
+    }),
+
+    // ── SECTION 1: HERO ──────────────────────────────────────────────
+    defineField({
+      name: "heroBadge",
+      title: "Hero Badge / Pretitle",
+      type: "string",
+      group: "hero",
+      initialValue: "ዕንቁ ሴት ንቁ ሴት",
+      description: "Small golden badge above the main title",
+    }),
+    defineField({
+      name: "heroTitleEn",
+      title: "Hero Title (English)",
+      type: "string",
+      group: "hero",
+      description: "e.g., Awakening the Gems Within Women",
+    }),
+    defineField({
+      name: "heroTitleAm",
+      title: "Hero Title (Amharic)",
+      type: "string",
+      group: "hero",
+    }),
+    defineField({
+      name: "heroSubtitleEn",
+      title: "Hero Subtitle (English)",
+      type: "text",
+      rows: 3,
+      group: "hero",
+    }),
+    defineField({
+      name: "heroSubtitleAm",
+      title: "Hero Subtitle (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "hero",
+    }),
+    defineField({
+      name: "heroCtaTextEn",
+      title: "Primary Button Text (English)",
+      type: "string",
+      group: "hero",
+      initialValue: "Nominate a Woman",
+    }),
+    defineField({
+      name: "heroCtaTextAm",
+      title: "Primary Button Text (Amharic)",
+      type: "string",
+      group: "hero",
+      initialValue: "ሴትን እጩ አድርግ",
+    }),
+    defineField({
+      name: "heroStats",
+      title: "Hero Stat Badges (Shown on scroll)",
+      type: "array",
+      group: "hero",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "value", title: "Value (e.g. 8, Aug 29, Podcast)", type: "string" }),
+            defineField({ name: "label", title: "Label (English)", type: "string" }),
+            defineField({ name: "labelAm", title: "Label (Amharic)", type: "string" }),
+          ],
+          preview: {
+            select: { title: "value", subtitle: "label" },
+          },
+        },
+      ],
+      description: "3 metrics displayed under the hero buttons after scrolling",
+    }),
+
+    // ── SECTION 2: FILM REEL ─────────────────────────────────────────
+    defineField({
+      name: "filmReelTitleEn",
+      title: "Film Reel Title (English)",
+      type: "string",
+      group: "filmReel",
+      initialValue: "Our Journey Through Time",
+    }),
+    defineField({
+      name: "filmReelTitleAm",
+      title: "Film Reel Title (Amharic)",
+      type: "string",
+      group: "filmReel",
+    }),
+    defineField({
+      name: "filmReelSubtitleEn",
+      title: "Film Reel Subtitle (English)",
+      type: "text",
+      rows: 2,
+      group: "filmReel",
+      initialValue: "Scroll to explore past honorees and the current session",
+    }),
+    defineField({
+      name: "filmReelSubtitleAm",
+      title: "Film Reel Subtitle (Amharic)",
+      type: "text",
+      rows: 2,
+      group: "filmReel",
+    }),
+    defineField({
+      name: "filmReelCurrentSession",
+      title: "Current Session Number Override (Optional)",
+      type: "number",
+      group: "filmReel",
+      description:
+        "Defaults to automatically selecting the highest/newest session number (e.g. 9). Enter a specific session number here only if you wish to override it.",
+    }),
+    defineField({
+      name: "filmReelPreviousSession",
+      title: "Previous Session Number Override (Optional)",
+      type: "number",
+      group: "filmReel",
+      description:
+        "Defaults to automatically selecting the session right before the current one (e.g. 8). Enter a specific session number here only if you wish to override it.",
+    }),
+
+    // ── SECTION 3: ABOUT ─────────────────────────────────────────────
+    defineField({
+      name: "aboutLabelEn",
+      title: "Section Badge / Label (English)",
+      type: "string",
+      group: "about",
+      initialValue: "About Us",
+    }),
+    defineField({
+      name: "aboutLabelAm",
+      title: "Section Badge / Label (Amharic)",
+      type: "string",
+      group: "about",
+      initialValue: "ስለ እኛ",
+    }),
+    defineField({
+      name: "aboutTitleEn",
+      title: "About Title (English)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "aboutTitleAm",
+      title: "About Title (Amharic)",
+      type: "string",
+      group: "about",
+    }),
+    defineField({
+      name: "aboutDescriptionEn",
+      title: "About Description (English)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutDescriptionAm",
+      title: "About Description (Amharic)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutMissionEn",
+      title: "Mission Paragraph - 'ENQU means Gem...' (English)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutMissionAm",
+      title: "Mission Paragraph (Amharic)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutVisionEn",
+      title: "Vision Paragraph - 'Mission: to empower...' (English)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutVisionAm",
+      title: "Vision Paragraph (Amharic)",
+      type: "text",
+      rows: 4,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutPhilosophyEn",
+      title: "Founders Philosophy Paragraph (English)",
+      type: "text",
+      rows: 3,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutPhilosophyAm",
+      title: "Founders Philosophy Paragraph (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "about",
+    }),
+    defineField({
+      name: "aboutStats",
+      title: "About Counter Metrics (4 items)",
+      type: "array",
+      group: "about",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "value", title: "Target Number (e.g. 8, 5, 100)", type: "number" }),
+            defineField({ name: "suffix", title: "Suffix (e.g. '+')", type: "string" }),
+            defineField({ name: "label", title: "Label (e.g. 'Empowerment events held')", type: "string" }),
+          ],
+          preview: {
+            select: { title: "value", subtitle: "label" },
+          },
+        },
+      ],
+      description: "Numbers that animate upwards when the user scrolls into view",
+    }),
+
+    // ── SECTION 4: INITIATIVES HIGHLIGHT ─────────────────────────────
+    defineField({
+      name: "programsHighlightLabelEn",
+      title: "Section Badge / Label (English)",
+      type: "string",
+      group: "programsHighlight",
+      initialValue: "What ENQU SET NIQU SET Does",
+    }),
+    defineField({
+      name: "programsHighlightLabelAm",
+      title: "Section Badge / Label (Amharic)",
+      type: "string",
+      group: "programsHighlight",
+    }),
+    defineField({
+      name: "programsHighlightTitleEn",
+      title: "Section Title (English)",
+      type: "string",
+      group: "programsHighlight",
+      initialValue: "Awakening the Gems Within Women",
+    }),
+    defineField({
+      name: "programsHighlightTitleAm",
+      title: "Section Title (Amharic)",
+      type: "string",
+      group: "programsHighlight",
+    }),
+    defineField({
+      name: "programsHighlightSubtitleEn",
+      title: "Section Subtitle (English)",
+      type: "text",
+      rows: 3,
+      group: "programsHighlight",
+    }),
+    defineField({
+      name: "programsHighlightSubtitleAm",
+      title: "Section Subtitle (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "programsHighlight",
+    }),
+
+    // ── SECTION 5: FOUNDERS HIGHLIGHT ────────────────────────────────
+    defineField({
+      name: "foundersHighlightLabelEn",
+      title: "Section Badge / Label (English)",
+      type: "string",
+      group: "foundersHighlight",
+      initialValue: "Founders & Voices",
+    }),
+    defineField({
+      name: "foundersHighlightLabelAm",
+      title: "Section Badge / Label (Amharic)",
+      type: "string",
+      group: "foundersHighlight",
+    }),
+    defineField({
+      name: "foundersHighlightTitleEn",
+      title: "Section Title (English)",
+      type: "string",
+      group: "foundersHighlight",
+      initialValue: "Authentic, Family-Led Leadership",
+    }),
+    defineField({
+      name: "foundersHighlightTitleAm",
+      title: "Section Title (Amharic)",
+      type: "string",
+      group: "foundersHighlight",
+    }),
+    defineField({
+      name: "foundersHighlightSubtitleEn",
+      title: "Section Subtitle (English)",
+      type: "text",
+      rows: 3,
+      group: "foundersHighlight",
+    }),
+    defineField({
+      name: "foundersHighlightSubtitleAm",
+      title: "Section Subtitle (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "foundersHighlight",
+    }),
+
+    // ── SECTION 6: GALLERY HIGHLIGHT ─────────────────────────────────
+    defineField({
+      name: "galleryHighlightLabelEn",
+      title: "Section Badge / Label (English)",
+      type: "string",
+      group: "galleryHighlight",
+      initialValue: "Glimpses of ENQU SET NIQU SET",
+    }),
+    defineField({
+      name: "galleryHighlightLabelAm",
+      title: "Section Badge / Label (Amharic)",
+      type: "string",
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryHighlightTitleEn",
+      title: "Section Title (English)",
+      type: "string",
+      group: "galleryHighlight",
+      initialValue: "Recognition in Motion",
+    }),
+    defineField({
+      name: "galleryHighlightTitleAm",
+      title: "Section Title (Amharic)",
+      type: "string",
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryHighlightSubtitleEn",
+      title: "Section Subtitle (English)",
+      type: "text",
+      rows: 3,
+      group: "galleryHighlight",
+    }),
+    defineField({
+      name: "galleryHighlightSubtitleAm",
+      title: "Section Subtitle (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "galleryHighlight",
+    }),
+
+    // ── SECTION 7: CONTACT HIGHLIGHT ─────────────────────────────────
+    defineField({
+      name: "contactHighlightLabelEn",
+      title: "Section Badge / Label (English)",
+      type: "string",
+      group: "contactHighlight",
+      initialValue: "Partner With Purpose",
+    }),
+    defineField({
+      name: "contactHighlightLabelAm",
+      title: "Section Badge / Label (Amharic)",
+      type: "string",
+      group: "contactHighlight",
+    }),
+    defineField({
+      name: "contactHighlightTitleEn",
+      title: "Section Title (English)",
+      type: "string",
+      group: "contactHighlight",
+      initialValue: "Nominate, Collaborate, or Host",
+    }),
+    defineField({
+      name: "contactHighlightTitleAm",
+      title: "Section Title (Amharic)",
+      type: "string",
+      group: "contactHighlight",
+    }),
+    defineField({
+      name: "contactHighlightSubtitleEn",
+      title: "Section Subtitle (English)",
+      type: "text",
+      rows: 3,
+      group: "contactHighlight",
+    }),
+    defineField({
+      name: "contactHighlightSubtitleAm",
+      title: "Section Subtitle (Amharic)",
+      type: "text",
+      rows: 3,
+      group: "contactHighlight",
+    }),
+  ],
+});

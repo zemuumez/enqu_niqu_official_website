@@ -5,9 +5,14 @@ import { CheckCircle } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
 
 export default function BootcampContent() {
-  const { t } = useLanguage()
-  const sectionRef = useRef<HTMLElement>(null)
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const { t, language, settings } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  const customFeatures =
+    language === "am"
+      ? settings?.bootcampFeaturesAm
+      : settings?.bootcampFeaturesEn;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -84,18 +89,25 @@ export default function BootcampContent() {
         <div className="mt-20 text-center">
           <h2 className="text-3xl font-bold mb-8 gradient-text fade-in-up">{t("bootcamp.curriculum")}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              "bootcamp.feature_1",
-              "bootcamp.feature_2",
-              "bootcamp.feature_3",
-              "bootcamp.feature_4",
-              "bootcamp.feature_5",
-            ].map((key, index) => (
-              <div key={index} className="bg-surface p-6 rounded-xl border border-gray-200 shadow-sm fade-in-up">
-                <h3 className="text-xl font-semibold text-text-primary mb-2">{t(key)}</h3>
-                <p className="text-text-secondary">A closer look at this pillar of the ENQU SET NIQU SET experience.</p>
-              </div>
-            ))}
+            {customFeatures && customFeatures.length > 0
+              ? customFeatures.map((feature: string, index: number) => (
+                  <div key={index} className="bg-surface p-6 rounded-xl border border-gray-200 shadow-sm fade-in-up">
+                    <h3 className="text-xl font-semibold text-text-primary mb-2">{feature}</h3>
+                    <p className="text-text-secondary">A closer look at this pillar of the ENQU SET NIQU SET experience.</p>
+                  </div>
+                ))
+              : [
+                  "bootcamp.feature_1",
+                  "bootcamp.feature_2",
+                  "bootcamp.feature_3",
+                  "bootcamp.feature_4",
+                  "bootcamp.feature_5",
+                ].map((key, index) => (
+                  <div key={index} className="bg-surface p-6 rounded-xl border border-gray-200 shadow-sm fade-in-up">
+                    <h3 className="text-xl font-semibold text-text-primary mb-2">{t(key)}</h3>
+                    <p className="text-text-secondary">A closer look at this pillar of the ENQU SET NIQU SET experience.</p>
+                  </div>
+                ))}
           </div>
         </div>
       </div>

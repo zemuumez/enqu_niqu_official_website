@@ -106,22 +106,21 @@ export default function ContactHighlight() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            Partner With Purpose
+            {t("contact.section_label")}
           </div>
           <h2
             className={`text-4xl md:text-6xl font-light leading-tight mb-6 transition-all duration-1000 delay-200 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            Nominate, Collaborate, or Host
+            {t("contact.section_title")}
           </h2>
           <p
             className={`text-xl text-text-secondary font-light max-w-3xl mx-auto transition-all duration-1000 delay-400 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            Share a resilient woman&apos;s story, host an ENQU SET NIQU SET conversation, or explore
-            partnerships that amplify awakened gems in your community.
+            {t("contact.section_subtitle")}
           </p>
         </div>
 

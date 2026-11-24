@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
-import Header from "@/components/header"
-import ContactContent from "@/components/contact-content"
-import Footer from "@/components/footer"
-import { LanguageProvider } from "@/contexts/language-context"
+import type { Metadata } from "next";
+import Header from "@/components/header";
+import ContactContent from "@/components/contact-content";
+import Footer from "@/components/footer";
+import { LanguageProvider } from "@/contexts/language-context";
 import { client } from "@/lib/sanity/sanity.client";
-import { siteSettingsQuery } from "@/lib/sanity/sanity.queries";
+import { siteSettingsQuery, contactPageQuery } from "@/lib/sanity/sanity.queries";
 
 export const metadata: Metadata = {
   title: "Contact & Nominate | ENQU SET NIQU SET",
@@ -13,14 +13,20 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   let siteSettings: any = null;
+  let pageContent: any = null;
   try {
-    siteSettings = await client.fetch(siteSettingsQuery);
+    const [settings, content] = await Promise.all([
+      client.fetch(siteSettingsQuery),
+      client.fetch(contactPageQuery),
+    ]);
+    siteSettings = settings;
+    pageContent = content;
   } catch (err) {
-    console.error("Sanity site settings query error:", err);
+    console.error("Sanity site settings/contact query error:", err);
   }
 
   return (
-    <LanguageProvider initialSettings={siteSettings}>
+    <LanguageProvider initialSettings={siteSettings} pageContent={pageContent}>
       <main className="min-h-screen">
         <Header />
         <div className="pt-20">
@@ -29,5 +35,5 @@ export default async function ContactPage() {
         <Footer />
       </main>
     </LanguageProvider>
-  )
+  );
 }

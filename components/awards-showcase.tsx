@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { client } from "@/lib/sanity/sanity.client";
+import { awardEventsQuery } from "@/lib/sanity/sanity.queries";
 
 type AwardEvent = {
   title: string;
@@ -370,7 +372,31 @@ function FloatingIcons() {
 
 export default function AwardsShowcase() {
   const NAV_OFFSET = 88;
+  const [eventsList, setEventsList] = useState<AwardEvent[]>(events);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const data = await client.fetch(awardEventsQuery);
+        if (data && data.length > 0) {
+          setEventsList(
+            data.map((item: any, idx: number) => ({
+              title: item.title,
+              date: item.date || "",
+              image: events[idx % events.length]?.image || "/images/TeachingAndLearning/workshop.jpg",
+              caption: item.caption || "",
+              nominees: item.nominees || [],
+              winners: item.winners || [],
+            }))
+          );
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for awards showcase, using fallback:", err);
+      }
+    }
+    fetchEvents();
+  }, []);
   const [activeSpotlight, setActiveSpotlight] = useState<{
     name: string;
     note: string;
@@ -443,7 +469,7 @@ export default function AwardsShowcase() {
       const scrollingUp = event.deltaY < 0;
       const scrollingDown = event.deltaY > 0;
 
-      const atLastSession = activeIndex === events.length - 1;
+      const atLastSession = activeIndex === eventsList.length - 1;
       const canLeaveDown = atBottom && atLastSession && sessionsComplete;
       const canLeaveUp = atTop && activeIndex === 0;
 
@@ -493,8 +519,8 @@ export default function AwardsShowcase() {
             );
             if (person && note) {
               setActiveSpotlight({ name: person, note, event: eventIdx });
-              const isLastSession = eventIdx === events.length - 1;
-              const lastNominee = events[events.length - 1].nominees.at(-1);
+              const isLastSession = eventIdx === eventsList.length - 1;
+              const lastNominee = eventsList[eventsList.length - 1]?.nominees?.at(-1);
               if (isLastSession && lastNominee && lastNominee.name === person) {
                 setSessionsComplete(true);
               }
@@ -511,11 +537,11 @@ export default function AwardsShowcase() {
 
   useEffect(() => {
     setActiveSpotlight({
-      name: events[activeIndex].nominees[0]?.name || "",
-      note: events[activeIndex].nominees[0]?.note || "",
+      name: eventsList[activeIndex]?.nominees[0]?.name || "",
+      note: eventsList[activeIndex]?.nominees[0]?.note || "",
       event: activeIndex,
     });
-  }, [activeIndex]);
+  }, [activeIndex, eventsList]);
 
   return (
     <section
@@ -540,22 +566,22 @@ export default function AwardsShowcase() {
                       className="w-full h-full transition-all duration-700 ease-out will-change-transform animate-fadeSlide"
                     >
                       <img
-                        src={events[activeIndex].image}
-                        alt={events[activeIndex].title}
+                        src={eventsList[activeIndex]?.image}
+                        alt={eventsList[activeIndex]?.title}
                         className="w-full h-full object-cover brightness-110 contrast-110 saturate-[1.15] scale-[1.02] rounded-xl shadow-2xl"
                       />
                     </div>
                   </div>
                   <div className="mt-4 flex items-center justify-between text-sm text-white/80">
                     <div className="font-semibold tracking-wide uppercase">
-                      {events[activeIndex].title}
+                      {eventsList[activeIndex]?.title}
                     </div>
                     <div className="text-white/60">
-                      {events[activeIndex].date}
+                      {eventsList[activeIndex]?.date}
                     </div>
                   </div>
                   <p className="mt-2 text-white/80 text-sm leading-relaxed">
-                    {events[activeIndex].caption}
+                    {eventsList[activeIndex]?.caption}
                   </p>
                 </div>
               </div>
@@ -566,7 +592,7 @@ export default function AwardsShowcase() {
             ref={detailsRef}
             className="lg:col-span-3 space-y-16 lg:pr-2 snap-y snap-mandatory lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto scrollbar-hide"
           >
-            {events.map((event, index) => (
+            {eventsList.map((event, index) => (
               <article
                 key={event.title}
                 data-index={index}

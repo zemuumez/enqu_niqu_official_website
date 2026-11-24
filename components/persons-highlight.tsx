@@ -90,7 +90,7 @@ export default function PersonsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Founders & Voices
+            {t("founders.section_label")}
           </div>
           <h2
             className={`text-4xl md:text-6xl font-light leading-tight mb-6 transition-all duration-1000 delay-200 ${
@@ -99,7 +99,7 @@ export default function PersonsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Authentic, Family-Led Leadership
+            {t("founders.section_title")}
           </h2>
           <p
             className={`text-xl text-text-secondary font-light max-w-3xl mx-auto transition-all duration-1000 delay-400 ${
@@ -108,8 +108,7 @@ export default function PersonsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Guided by a family-centered founding team and powered by women whose
-            lived experiences shape every award, dialogue, and story.
+            {t("founders.section_subtitle")}
           </p>
         </div>
 

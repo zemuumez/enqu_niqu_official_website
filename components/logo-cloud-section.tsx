@@ -1,19 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { client } from "@/lib/sanity/sanity.client";
+import { sponsorsQuery } from "@/lib/sanity/sanity.queries";
 
 export default function LogoCloudSection() {
-  const logos = [
+  const defaultLogos = [
     "Dashen Bank",
-    "Guenet Hotel",
-    "Shega chewata",
-    "Samilos Media and Communications",
-    "Weyn Coffee",
-    "Metemamen MicroFinance",
-    "Abronet Digital Equib",
-    "Hagere Tv",
-    "Marya's decor",
-    "Dashen Bank", // Duplicate for seamless loop
     "Guenet Hotel",
     "Shega chewata",
     "Samilos Media and Communications",
@@ -24,27 +17,33 @@ export default function LogoCloudSection() {
     "Marya's decor",
   ];
 
+  const [logos, setLogos] = useState<string[]>([...defaultLogos, ...defaultLogos]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    async function fetchSponsors() {
+      try {
+        const data = await client.fetch(sponsorsQuery);
+        if (data && data.length > 0) {
+          const names = data.map((s: any) => s.name).filter(Boolean);
+          if (names.length > 0) {
+            // Duplicate for marquee loop
+            setLogos([...names, ...names]);
+          }
+        }
+      } catch (err) {
+        console.error("Sanity fetch error for sponsors, using fallback:", err);
+      }
+    }
+    fetchSponsors();
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Add animation class
     container.classList.add("animate-marquee");
-
-    // // Pause animation on hover
-    // const handleMouseEnter = () => setIsHovered(true);
-    // const handleMouseLeave = () => setIsHovered(false);
-
-    // container.addEventListener("mouseenter", handleMouseEnter);
-    // container.addEventListener("mouseleave", handleMouseLeave);
-
-    // return () => {
-    //   container.removeEventListener("mouseenter", handleMouseEnter);
-    //   container.removeEventListener("mouseleave", handleMouseLeave);
-    // };
   }, []);
 
   return (

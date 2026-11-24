@@ -6,7 +6,10 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "sanity:backup": "node --experimental-strip-types scripts/sanity-backup.ts",
+    "sanity:restore": "node --experimental-strip-types scripts/sanity-restore.ts",
+    "sanity:security-audit": "node --experimental-strip-types scripts/sanity-security-audit.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

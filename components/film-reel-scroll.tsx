@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/language-context";
 
 interface FilmFrame {
   id: string;
@@ -157,12 +158,15 @@ function FilmStrip({
 }
 
 export default function FilmReelScroll({
+  currentImages,
   previousImages,
   upcomingImages,
 }: {
+  currentImages?: string[];
   previousImages?: string[];
   upcomingImages?: string[];
 }) {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftStripRef = useRef<HTMLDivElement>(null);
   const rightStripRef = useRef<HTMLDivElement>(null);
@@ -170,32 +174,39 @@ export default function FilmReelScroll({
   const [leftStripWidth, setLeftStripWidth] = useState(0);
   const [rightStripWidth, setRightStripWidth] = useState(0);
 
+  // Top strip: Current session images (e.g. Session 9)
+  const activeCurrentImages = currentImages || previousImages;
+  // Bottom strip: Previous session images (e.g. Session 8)
+  const activePreviousImages = currentImages
+    ? previousImages
+    : upcomingImages || previousImages;
+
   // Create randomized frames only when input arrays change (or on mount)
-  const randomizedPreviousFrames: FilmFrame[] = useMemo(() => {
-    if (previousImages && previousImages.length > 0) {
-      const shuffled = shuffle(previousImages);
+  const randomizedCurrentFrames: FilmFrame[] = useMemo(() => {
+    if (activeCurrentImages && activeCurrentImages.length > 0) {
+      const shuffled = shuffle(activeCurrentImages);
       return shuffled.map((src, i) => ({ id: String(i), image: src }));
     }
     return defaultPreviousFrames;
-  }, [previousImages]);
+  }, [activeCurrentImages]);
 
-  const randomizedUpcomingFrames: FilmFrame[] = useMemo(() => {
-    if (upcomingImages && upcomingImages.length > 0) {
-      const shuffled = shuffle(upcomingImages);
+  const randomizedPreviousFrames: FilmFrame[] = useMemo(() => {
+    if (activePreviousImages && activePreviousImages.length > 0) {
+      const shuffled = shuffle(activePreviousImages);
       return shuffled.map((src, i) => ({ id: String(i + 100), image: src }));
     }
     return defaultUpcomingFrames;
-  }, [upcomingImages]);
+  }, [activePreviousImages]);
 
   // Calculate the width of one complete set of frames for seamless looping
   useEffect(() => {
     const calculateStripWidth = () => {
-      if (leftStripRef.current && randomizedPreviousFrames.length > 0) {
+      if (leftStripRef.current && randomizedCurrentFrames.length > 0) {
         // Measure the actual width of one complete set of frames
         const children = leftStripRef.current.children;
-        if (children.length >= randomizedPreviousFrames.length) {
+        if (children.length >= randomizedCurrentFrames.length) {
           let totalWidth = 0;
-          for (let i = 0; i < randomizedPreviousFrames.length; i++) {
+          for (let i = 0; i < randomizedCurrentFrames.length; i++) {
             const child = children[i] as HTMLElement;
             if (child) {
               totalWidth += child.offsetWidth;
@@ -204,11 +215,11 @@ export default function FilmReelScroll({
           setLeftStripWidth(totalWidth);
         }
       }
-      if (rightStripRef.current && randomizedUpcomingFrames.length > 0) {
+      if (rightStripRef.current && randomizedPreviousFrames.length > 0) {
         const children = rightStripRef.current.children;
-        if (children.length >= randomizedUpcomingFrames.length) {
+        if (children.length >= randomizedPreviousFrames.length) {
           let totalWidth = 0;
-          for (let i = 0; i < randomizedUpcomingFrames.length; i++) {
+          for (let i = 0; i < randomizedPreviousFrames.length; i++) {
             const child = children[i] as HTMLElement;
             if (child) {
               totalWidth += child.offsetWidth;
@@ -229,7 +240,7 @@ export default function FilmReelScroll({
       clearTimeout(timeoutId);
       window.removeEventListener("resize", calculateStripWidth);
     };
-  }, [randomizedPreviousFrames.length, randomizedUpcomingFrames.length]);
+  }, [randomizedCurrentFrames.length, randomizedPreviousFrames.length]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -298,9 +309,9 @@ export default function FilmReelScroll({
   // Estimate frame width if not yet calculated (w-36 = 144px + padding = ~170px)
   const estimatedFrameWidth = 170;
   const estimatedLeftSetWidth =
-    randomizedPreviousFrames.length * estimatedFrameWidth;
+    randomizedCurrentFrames.length * estimatedFrameWidth;
   const estimatedRightSetWidth =
-    randomizedUpcomingFrames.length * estimatedFrameWidth;
+    randomizedPreviousFrames.length * estimatedFrameWidth;
 
   // Use actual width if available, otherwise use estimated width
   const leftSetWidth =
@@ -329,16 +340,16 @@ export default function FilmReelScroll({
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-3">
-            Our Journey Through Time
+            {t("filmreel.title")}
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Scroll to explore past honorees and upcoming sessions
+            {t("filmreel.subtitle")}
           </p>
         </div>
 
         {/* Film Reel Container */}
         <div className="space-y-10">
-          {/* Top Film Reel - Previous Sessions (Scrolling Left) */}
+          {/* Top Film Reel - Current Session (Scrolling Left) */}
           <div className="relative w-full">
             <div className="overflow-hidden w-full rounded-2xl border border-zinc-800/60 bg-zinc-950/50">
               <div
@@ -346,7 +357,7 @@ export default function FilmReelScroll({
                 style={{ transform: `translateX(${leftReelTransform}px)` }}
               >
                 <FilmStrip
-                  frames={randomizedPreviousFrames}
+                  frames={randomizedCurrentFrames}
                   color="black"
                   label=""
                   stripRef={leftStripRef}
@@ -355,21 +366,19 @@ export default function FilmReelScroll({
             </div>
           </div>
 
-          {/* Bottom Film Reel - Upcoming Sessions (Scrolling Right) */}
+          {/* Bottom Film Reel - Previous Sessions (Scrolling Right) */}
           <div className="relative w-full">
             <div className="overflow-hidden w-full rounded-2xl border border-red-900/50 bg-red-950/40">
               <div
                 className="flex items-center will-change-transform"
                 style={{
                   transform: `translateX(${rightReelTransform}px)`,
-                  // Ensure the strip starts at left edge (0) with frames visible
-                  // Remove any potential spacing that could cause empty space
                   margin: 0,
                   padding: 0,
                 }}
               >
                 <FilmStrip
-                  frames={randomizedUpcomingFrames}
+                  frames={randomizedPreviousFrames}
                   color="red"
                   label=""
                   stripRef={rightStripRef}

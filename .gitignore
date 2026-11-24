@@ -23,6 +23,10 @@ bun.lock
 
 # env files
 .env*
+!.env.example
+
+# pnpm store
+.pnpm-store/
 
 # vercel
 .vercel
@@ -35,3 +39,6 @@ next-env.d.ts
 
 # Snyk Security Extension - AI Rules (auto-generated)
 .github/instructions/snyk_rules.instructions.md
+
+# Sanity backups
+backups/

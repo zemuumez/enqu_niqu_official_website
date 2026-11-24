@@ -97,7 +97,7 @@ export default function ProgramsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            What ENQU SET NIQU SET Does
+            {t("programs.section_label")}
           </div>
           <h2
             className={`text-4xl md:text-6xl font-light leading-tight mb-6 transition-all duration-1000 delay-200 ${
@@ -106,7 +106,7 @@ export default function ProgramsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Awakening the Gems Within Women
+            {t("programs.section_title")}
           </h2>
           <p
             className={`text-xl text-text-secondary font-light max-w-3xl mx-auto transition-all duration-1000 delay-400 ${
@@ -115,9 +115,7 @@ export default function ProgramsHighlight() {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Recognition is not a luxury—it is a catalyst. These initiatives
-            honor resilience, amplify unheard voices, and build community
-            belief.
+            {t("programs.section_subtitle")}
           </p>
         </div>
 

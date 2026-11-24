@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
+import { client } from "@/lib/sanity/sanity.client";
+import { gallerySessionsQuery } from "@/lib/sanity/sanity.queries";
 
 interface SessionImages {
   session: number;
@@ -15,15 +17,48 @@ interface GalleryContentProps {
 export default function GalleryContent({ sessionsData }: GalleryContentProps) {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [sessions, setSessions] = useState<SessionImages[]>(sessionsData || []);
   const [activeSession, setActiveSession] = useState<number>(
-    sessionsData.length > 0 ? sessionsData[0].session : 1
+    sessionsData && sessionsData.length > 0 ? sessionsData[0].session : 1
   );
   const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
   const sessionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const imageRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  // Use the dynamically loaded sessions data
-  const sessions = sessionsData;
+  // Client-side fallback: if server-rendered sessionsData was empty, fetch directly from Sanity
+  useEffect(() => {
+    if (sessions.length === 0) {
+      async function fetchClientSessions() {
+        try {
+          const data = await client.fetch(gallerySessionsQuery);
+          if (data && data.length > 0) {
+            const formatted = data.map((s: any) => ({
+              session: s.session,
+              images: (s.images || []).filter(Boolean),
+            }));
+            setSessions(formatted);
+            if (formatted[0]) {
+              setActiveSession(formatted[0].session);
+            }
+          }
+        } catch (err) {
+          console.error("Client gallery fetch error:", err);
+        }
+      }
+      fetchClientSessions();
+    }
+  }, [sessions.length]);
+
+  // Pre-reveal initial images
+  useEffect(() => {
+    if (sessions.length > 0) {
+      const initial = new Set<string>();
+      sessions.slice(0, 2).forEach((s) => {
+        (s.images || []).forEach((img) => initial.add(img));
+      });
+      setVisibleImages((prev) => new Set([...prev, ...initial]));
+    }
+  }, [sessions]);
 
   // Use IntersectionObserver to show images as they enter viewport
   useEffect(() => {
@@ -232,6 +267,9 @@ export default function GalleryContent({ sessionsData }: GalleryContentProps) {
                         }`}
                         className="w-full h-64 md:h-80 object-cover transition-transform duration-500 hover:scale-110"
                         loading="lazy"
+                        onLoad={() =>
+                          setVisibleImages((prev) => new Set([...prev, image]))
+                        }
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                         <p className="text-white text-sm font-medium">

@@ -4,7 +4,7 @@ import PersonsContent from "@/components/persons-content";
 import Footer from "@/components/footer";
 import { LanguageProvider } from "@/contexts/language-context";
 import { client } from "@/lib/sanity/sanity.client";
-import { siteSettingsQuery } from "@/lib/sanity/sanity.queries";
+import { siteSettingsQuery, foundersPageQuery } from "@/lib/sanity/sanity.queries";
 
 export const metadata: Metadata = {
   title: "Founders & Voices | ENQU SET NIQU SET",
@@ -13,14 +13,20 @@ export const metadata: Metadata = {
 
 export default async function PersonsPage() {
   let siteSettings: any = null;
+  let pageContent: any = null;
   try {
-    siteSettings = await client.fetch(siteSettingsQuery);
+    const [settings, content] = await Promise.all([
+      client.fetch(siteSettingsQuery),
+      client.fetch(foundersPageQuery),
+    ]);
+    siteSettings = settings;
+    pageContent = content;
   } catch (err) {
-    console.error("Sanity site settings query error:", err);
+    console.error("Sanity site settings/founders query error:", err);
   }
 
   return (
-    <LanguageProvider initialSettings={siteSettings}>
+    <LanguageProvider initialSettings={siteSettings} pageContent={pageContent}>
       <main className="min-h-screen">
         <Header />
         <div className="pt-20">

@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Camera } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/contexts/language-context";
 
 interface GalleryHighlightProps {
   sessions?: any[];
 }
 
 export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -122,7 +124,7 @@ export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Glimpses of ENQU SET NIQU SET
+            {t("gallery.section_label")}
           </div>
           <h2
             className={`text-4xl md:text-6xl font-light leading-tight mb-6 transition-all duration-1000 delay-200 ${
@@ -131,7 +133,7 @@ export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Recognition in Motion
+            {t("gallery.section_title")}
           </h2>
           <p
             className={`text-xl text-text-secondary font-light max-w-3xl mx-auto transition-all duration-1000 delay-400 ${
@@ -140,8 +142,7 @@ export default function GalleryHighlight({ sessions }: GalleryHighlightProps) {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Award evenings, panels, and intimate conversations where resilience
-            is honored and unheard stories find the spotlight.
+            {t("gallery.section_subtitle")}
           </p>
         </div>
 

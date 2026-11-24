@@ -15,7 +15,7 @@ import {
 import { useLanguage } from "@/contexts/language-context";
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { t, settings } = useLanguage();
 
   const quickLinks = [
     { key: "nav.home", href: "/" },
@@ -54,35 +54,46 @@ export default function Footer() {
                 <span className="text-[11px] uppercase tracking-[0.16em]">
                   ENQU SET NIQU SET
                 </span>
-                <span className="text-xs">Awakening the Gems Within Women</span>
+                <span className="text-xs">{t("footer.tagline")}</span>
               </div>
             </Link>
             <p className="mb-6 leading-relaxed">
-              Award-driven empowerment platform recognizing, amplifying, and
-              celebrating resilient women whose stories deserve the spotlight.
+              {t("footer.description")}
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href={settings?.facebookUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://www.youtube.com/@Enkuconsultancy"
+                href={settings?.youtubeUrl || "https://www.youtube.com/@Enkuconsultancy"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                aria-label="YouTube"
               >
                 <Youtube className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href={settings?.instagramUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href={settings?.linkedinUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>

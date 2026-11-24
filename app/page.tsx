@@ -9,12 +9,11 @@ import Footer from "@/components/footer";
 import LogoCloudSection from "@/components/logo-cloud-section";
 import AwardsShowcase from "@/components/awards-showcase";
 import FilmRealScroll from "@/components/film-reel-scroll";
-import PatternDevider from "@/components/pattern-divider";
 import { LanguageProvider } from "@/contexts/language-context";
 import fs from "fs";
 import path from "path";
 import { client } from "@/lib/sanity/sanity.client";
-import { gallerySessionsQuery, siteSettingsQuery } from "@/lib/sanity/sanity.queries";
+import { gallerySessionsQuery, siteSettingsQuery, homePageQuery } from "@/lib/sanity/sanity.queries";
 
 export const dynamic = "force-dynamic";
 
@@ -44,40 +43,62 @@ export default async function Home() {
     }
   };
 
-  let sessionNowImages: string[] = [];
-  let sessionLastImages: string[] = [];
+  let siteSettings: any = null;
+  let homePageContent: any = null;
   let allSessions: any[] = [];
 
   try {
-    const sanityData = await client.fetch(gallerySessionsQuery);
-    if (sanityData && sanityData.length > 0) {
-      allSessions = sanityData;
-      const session8 = sanityData.find((s: any) => s.session === 8);
-      const session7 = sanityData.find((s: any) => s.session === 7);
-      if (session8) sessionNowImages = session8.images || [];
-      if (session7) sessionLastImages = session7.images || [];
+    const [settings, homeContent, galleryData] = await Promise.all([
+      client.fetch(siteSettingsQuery),
+      client.fetch(homePageQuery),
+      client.fetch(gallerySessionsQuery),
+    ]);
+    siteSettings = settings;
+    homePageContent = homeContent;
+    if (galleryData && galleryData.length > 0) {
+      allSessions = galleryData;
     }
   } catch (err) {
-    console.error("Sanity query error on Home page film reel, using local:", err);
+    console.error("Sanity queries error on Home page:", err);
   }
 
-  if (sessionNowImages.length === 0) {
-    sessionNowImages = readPublicImages(sessionNowDir, "/images/Session8");
-  }
-  if (sessionLastImages.length === 0) {
-    sessionLastImages = readPublicImages(sessionLastDir, "/images/Session7");
-  }
+  // Filter valid sessions that have uploaded images, sorted descending (highest session first)
+  const validSessions = allSessions
+    .filter((s: any) => Array.isArray(s.images) && s.images.length > 0)
+    .sort((a: any, b: any) => (Number(b.session) || 0) - (Number(a.session) || 0));
 
+  // Determine current session: CMS override if set, else newest session with images (e.g. Session 9)
+  const cmsCurrent = homePageContent?.filmReelCurrentSession;
+  const cmsPrevious = homePageContent?.filmReelPreviousSession;
 
-  let siteSettings: any = null;
-  try {
-    siteSettings = await client.fetch(siteSettingsQuery);
-  } catch (err) {
-    console.error("Sanity site settings query error:", err);
+  const currentSessionObj =
+    (cmsCurrent ? validSessions.find((s: any) => Number(s.session) === Number(cmsCurrent)) : null) ||
+    validSessions[0] ||
+    null;
+
+  // Determine previous session: CMS override if set, else the session immediately prior (e.g. Session 8)
+  const remainingSessions = validSessions.filter(
+    (s: any) => !currentSessionObj || Number(s.session) !== Number(currentSessionObj.session)
+  );
+
+  const previousSessionObj =
+    (cmsPrevious ? validSessions.find((s: any) => Number(s.session) === Number(cmsPrevious)) : null) ||
+    remainingSessions[0] ||
+    validSessions[1] ||
+    null;
+
+  let currentSessionImages: string[] = currentSessionObj?.images || [];
+  let previousSessionImages: string[] = previousSessionObj?.images || [];
+
+  if (currentSessionImages.length === 0) {
+    currentSessionImages = readPublicImages(sessionNowDir, "/images/Session9");
+  }
+  if (previousSessionImages.length === 0) {
+    previousSessionImages = readPublicImages(sessionLastDir, "/images/Session8");
   }
 
   return (
-    <LanguageProvider initialSettings={siteSettings}>
+    <LanguageProvider initialSettings={siteSettings} pageContent={homePageContent}>
       <main className="min-h-screen">
         <Header />
         <HeroSection />
@@ -85,8 +106,8 @@ export default async function Home() {
         <LogoCloudSection />
         {/* <AwardsShowcase /> */}
         <FilmRealScroll
-          previousImages={sessionNowImages}
-          upcomingImages={sessionLastImages}
+          currentImages={currentSessionImages}
+          previousImages={previousSessionImages}
         />
         <AboutSection />
         <ProgramsHighlight />
